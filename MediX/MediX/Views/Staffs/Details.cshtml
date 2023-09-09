@@ -1,0 +1,70 @@
+﻿@model MediX.Models.Staff
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Staff</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            "Name"
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.FirstName + " " + model.Detail.LastName)
+        </dd>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Detail.Email)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.Email)
+        </dd>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Detail.PhoneNumber)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.PhoneNumber)
+        </dd>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Detail.Address)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.Address)
+        </dd>
+
+        <dd>
+            @Html.DisplayNameFor(model => model.Detail.Email)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MedicalCenter.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedicalCenter.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Detail.Email)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
