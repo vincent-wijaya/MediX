@@ -65,29 +65,35 @@ namespace MediX.Models
 
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Email address is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [Display(Name = "Email address")]
+        public string Email { get; set; }
+
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        [Display(Name = "Confirm email address")]
+        [Compare("Email", ErrorMessage = "The email address and confirmation email address do not match.")]
+        public string ConfirmEmail { get; set; }
+
         // ADD VALIDATORS
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required.")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Date of birth is required.")]
+        [DataType(DataType.Date)]
         [Display(Name = "Date of birth")]
         public System.DateTime DateOfBirth { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Address is rquired.")]
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Phone number is required.")]
+        [Phone(ErrorMessage = "Invalid phone number.")]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 

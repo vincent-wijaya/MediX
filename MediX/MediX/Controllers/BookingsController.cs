@@ -50,7 +50,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
-        //[Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // GET: Bookings/Create
         public ActionResult Create()
         {
@@ -61,6 +61,7 @@ namespace MediX.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -82,6 +83,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // GET: Bookings/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -101,6 +103,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // POST: Bookings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -121,6 +124,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // GET: Bookings/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -136,6 +140,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
