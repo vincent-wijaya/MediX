@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/07/2023 23:22:16
--- Generated from EDMX file: C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\Models\MediX_DatabaseModel.edmx
+-- Date Created: 09/14/2023 14:43:11
+-- Generated from EDMX file: C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX\Models\MediX_DatabaseModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -128,7 +128,7 @@ CREATE TABLE [dbo].[Bookings] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [DateTime] datetime  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
-    [IsCompleted] nvarchar(max)  NOT NULL,
+    [IsCompleted] bit  NOT NULL,
     [DateCreated] datetime  NOT NULL,
     [PatientId] int  NOT NULL,
     [StaffId] int  NOT NULL,

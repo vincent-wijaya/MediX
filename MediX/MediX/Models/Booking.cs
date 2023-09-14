@@ -17,7 +17,7 @@ namespace MediX.Models
         public int Id { get; set; }
         public System.DateTime DateTime { get; set; }
         public string Notes { get; set; }
-        public string IsCompleted { get; set; }
+        public bool IsCompleted { get; set; }
         public System.DateTime DateCreated { get; set; }
         public int PatientId { get; set; }
         public int StaffId { get; set; }

@@ -20,22 +20,19 @@
                 <ul class="navbar-nav flex-grow-1">
                     @if (Request.IsAuthenticated)
                     {
-                        if (User.IsInRole("Standard"))
+                        @Html.Partial("_StandardPartial");
+
+                        if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
                         {
-                            @Html.Partial("_StandardPartial");
+                            @Html.Partial("_StaffPartial");
 
-                            if (User.IsInRole("MedicalStaff"))
+                            if (User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
                             {
-                                @Html.Partial("_StaffPartial");
+                                @Html.Partial("_FacilityManagerPartial");
 
-                                if (User.IsInRole("FacilityManager"))
+                                if (User.IsInRole("Administrator"))
                                 {
-                                    @Html.Partial("_FacilityManagerPartial");
-
-                                    if (User.IsInRole("Administrator"))
-                                    {
-                                        @Html.Partial("_AdministratorPartial");
-                                    }
+                                    @Html.Partial("_AdministratorPartial");
                                 }
                             }
                         }

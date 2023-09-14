@@ -52,12 +52,14 @@ namespace MediX.Controllers
 
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // GET: Bookings/Create
-        public ActionResult Create()
+        public ActionResult Create(int? medicalCenterId)
         {
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id");
             ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
             ViewBag.MedicalCenterName = new SelectList(db.MedicalCenters, "Id", "Name");
             ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment");
+
+            var xRayRooms = db.XRayRooms.Where(m => m.MedicalCenterId == medicalCenterId);
             return View();
         }
 

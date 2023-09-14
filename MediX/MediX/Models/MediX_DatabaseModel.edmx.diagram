@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="267bf64345614fdd8f78218b71915a8a" Name="Diagram1" ZoomLevel="64" >
+      <Diagram DiagramId="267bf64345614fdd8f78218b71915a8a" Name="Diagram1" ZoomLevel="72" >
         <EntityTypeShape EntityType="MediX_DatabaseModel.Patient" Width="1.5" PointX="4.625" PointY="4.75" />
         <EntityTypeShape EntityType="MediX_DatabaseModel.Staff" Width="1.5" PointX="4.75" PointY="8.125" />
         <EntityTypeShape EntityType="MediX_DatabaseModel.MedicalCenter" Width="1.5" PointX="14" PointY="5.625" />

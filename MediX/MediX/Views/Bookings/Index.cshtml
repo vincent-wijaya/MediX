@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MediX.Models.Booking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Bookings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -91,3 +91,8 @@
     </table>
 
 </div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/fullcalendar")
+}

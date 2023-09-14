@@ -154,7 +154,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="IsCompleted" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Patient" Relationship="MediX_DatabaseModel.PatientBooking" FromRole="Booking" ToRole="Patient" />
     <Property Name="PatientId" Type="Int32" Nullable="false" />

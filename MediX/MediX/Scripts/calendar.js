@@ -10,8 +10,11 @@ $(".bookings").each(function () {
 });
 $("#calendar").fullCalendar({
     locale: 'au',
-    bookings: bookings,
+    events: bookings,
     dayClick: function (date, allDay, jsEvent, view) {
+        $.ajax({
+            url: '/Bookings/'
+        })
         var d = new Date(date);
         var m = moment(d).format("YYYY-MM-DD");
         m = encodeURIComponent(m);

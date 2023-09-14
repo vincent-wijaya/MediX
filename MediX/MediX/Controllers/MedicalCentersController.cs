@@ -20,6 +20,13 @@ namespace MediX.Controllers
             return View(db.MedicalCenters.ToList());
         }
 
+        // GET: MedicalCenters/GetXRayRooms/5
+        public ActionResult GetXRayRooms(int? id)
+        {
+
+            return View(db.XRayRooms.Where(m => m.MedicalCenterId == id).ToList());
+        }
+
         // GET: MedicalCenters/Details/5
         public ActionResult Details(int? id)
         {

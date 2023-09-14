@@ -101,7 +101,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DateTime" Type="datetime" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="IsCompleted" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsCompleted" Type="bit" Nullable="false" />
     <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="PatientId" Type="int" Nullable="false" />
     <Property Name="StaffId" Type="int" Nullable="false" />

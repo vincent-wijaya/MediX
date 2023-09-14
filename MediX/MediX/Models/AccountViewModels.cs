@@ -75,7 +75,6 @@ namespace MediX.Models
         [Compare("Email", ErrorMessage = "The email address and confirmation email address do not match.")]
         public string ConfirmEmail { get; set; }
 
-        // ADD VALIDATORS
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
