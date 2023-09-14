@@ -77,7 +77,7 @@
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id })
                     }
                     |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id, @class = "btn btn-primary" }) |
                     @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
                     {
                         @Html.ActionLink("Delete", "Delete", new { id = item.Id })
