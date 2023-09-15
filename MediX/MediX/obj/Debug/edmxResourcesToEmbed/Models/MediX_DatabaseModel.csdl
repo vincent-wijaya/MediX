@@ -45,13 +45,15 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FirstName" Type="String" Nullable="false" />
-    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="256" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="256" />
     <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Bookings" Relationship="MediX_DatabaseModel.PatientBooking" FromRole="Patient" ToRole="Booking" />
-    <Property Name="AccountId" Type="String" Nullable="false" />
+    <Property Name="AccountId" Type="String" Nullable="false" MaxLength="128" />
     <NavigationProperty Name="Ratings" Relationship="MediX_DatabaseModel.PatientRating" FromRole="Patient" ToRole="Rating" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="15" />
   </EntityType>
   <EnumType Name="Role" UnderlyingType="Int16">
     <Member Name="Admin" Value="0" />
@@ -64,22 +66,24 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FirstName" Type="String" Nullable="false" />
-    <Property Name="LastName" Type="String" Nullable="false" />
+    <Property Name="FirstName" Type="String" Nullable="false" MaxLength="256" />
+    <Property Name="LastName" Type="String" Nullable="false" MaxLength="256" />
     <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="MedicalCenter" Relationship="MediX_DatabaseModel.MedicalCenterStaff" FromRole="Staff" ToRole="MedicalCenter" />
     <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="BookedBookings" Relationship="MediX_DatabaseModel.StaffBooking" FromRole="Staff" ToRole="Booking" />
-    <Property Name="AccountId" Type="String" Nullable="false" />
+    <Property Name="AccountId" Type="String" Nullable="false" MaxLength="128" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="128" />
+    <Property Name="PhoneNumber" Type="String" Nullable="false" annotation:StoreGeneratedPattern="None" MaxLength="15" />
   </EntityType>
   <EntityType Name="MedicalCenter">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
     <Property Name="Longitude" Type="Double" Nullable="false" />
     <Property Name="Latitude" Type="Double" Nullable="false" />
     <Property Name="OpenTime" Type="Time" Nullable="false" Precision="7" />
@@ -93,7 +97,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RoomNumber" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="RoomNumber" Type="String" Nullable="false" Unicode="true" FixedLength="false" MaxLength="10" />
     <NavigationProperty Name="MedicalCenter" Relationship="MediX_DatabaseModel.MedicalCenterXRayRoom" FromRole="XRayRoom" ToRole="MedicalCenter" />
     <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Bookings" Relationship="MediX_DatabaseModel.XRayRoomBooking" FromRole="XRayRoom" ToRole="Booking" />
@@ -128,7 +132,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Value" Type="Int16" Nullable="false" />
-    <Property Name="Comment" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Comment" Type="String" Nullable="false" MaxLength="512" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="MedicalCenter" Relationship="MediX_DatabaseModel.MedicalCenterRating" FromRole="Rating" ToRole="MedicalCenter" />
     <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Booking" Relationship="MediX_DatabaseModel.BookingRating" FromRole="Rating" ToRole="Booking" />
@@ -153,7 +157,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Notes" Type="String" Nullable="false" Unicode="true" FixedLength="false" MaxLength="512" />
     <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
     <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Patient" Relationship="MediX_DatabaseModel.PatientBooking" FromRole="Booking" ToRole="Patient" />

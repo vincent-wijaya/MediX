@@ -168,7 +168,9 @@ namespace MediX.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         DateOfBirth = model.DateOfBirth,
-                        Address = model.Address
+                        Address = model.Address,
+                        PhoneNumber = model.PhoneNumber,
+                        Email = model.Email
                     };
 
                     db.Patients.Add(patient);

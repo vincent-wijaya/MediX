@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/14/2023 14:43:11
+-- Date Created: 09/14/2023 19:01:45
 -- Generated from EDMX file: C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX\Models\MediX_DatabaseModel.edmx
 -- --------------------------------------------------
 
@@ -72,31 +72,35 @@ GO
 -- Creating table 'Patients'
 CREATE TABLE [dbo].[Patients] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [FirstName] nvarchar(max)  NOT NULL,
-    [LastName] nvarchar(max)  NOT NULL,
+    [FirstName] nvarchar(256)  NOT NULL,
+    [LastName] nvarchar(256)  NOT NULL,
     [DateOfBirth] datetime  NOT NULL,
-    [Address] nvarchar(max)  NOT NULL,
-    [AccountId] nvarchar(max)  NOT NULL
+    [Address] nvarchar(256)  NOT NULL,
+    [AccountId] nvarchar(128)  NOT NULL,
+    [Email] nvarchar(128)  NOT NULL,
+    [PhoneNumber] nvarchar(15)  NOT NULL
 );
 GO
 
 -- Creating table 'Staffs'
 CREATE TABLE [dbo].[Staffs] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [FirstName] nvarchar(max)  NOT NULL,
-    [LastName] nvarchar(max)  NOT NULL,
+    [FirstName] nvarchar(256)  NOT NULL,
+    [LastName] nvarchar(256)  NOT NULL,
     [DateOfBirth] datetime  NOT NULL,
-    [Address] nvarchar(max)  NOT NULL,
+    [Address] nvarchar(256)  NOT NULL,
     [MedicalCenterId] int  NOT NULL,
-    [AccountId] nvarchar(max)  NOT NULL
+    [AccountId] nvarchar(128)  NOT NULL,
+    [Email] nvarchar(128)  NOT NULL,
+    [PhoneNumber] nvarchar(15)  NOT NULL
 );
 GO
 
 -- Creating table 'MedicalCenters'
 CREATE TABLE [dbo].[MedicalCenters] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [Address] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(256)  NOT NULL,
+    [Address] nvarchar(256)  NOT NULL,
     [Longitude] float  NOT NULL,
     [Latitude] float  NOT NULL,
     [OpenTime] time  NOT NULL,
@@ -107,7 +111,7 @@ GO
 -- Creating table 'XRayRooms'
 CREATE TABLE [dbo].[XRayRooms] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [RoomNumber] nvarchar(max)  NOT NULL,
+    [RoomNumber] nvarchar(10)  NOT NULL,
     [MedicalCenterId] int  NOT NULL
 );
 GO
@@ -116,7 +120,7 @@ GO
 CREATE TABLE [dbo].[Ratings] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Value] smallint  NOT NULL,
-    [Comment] nvarchar(max)  NOT NULL,
+    [Comment] nvarchar(512)  NOT NULL,
     [MedicalCenterId] int  NOT NULL,
     [PatientId] int  NOT NULL,
     [Booking_Id] int  NOT NULL
@@ -127,7 +131,7 @@ GO
 CREATE TABLE [dbo].[Bookings] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [DateTime] datetime  NOT NULL,
-    [Notes] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(512)  NOT NULL,
     [IsCompleted] bit  NOT NULL,
     [DateCreated] datetime  NOT NULL,
     [PatientId] int  NOT NULL,

@@ -20,12 +20,14 @@
                 @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
@@ -36,19 +38,23 @@
                         <span class="input-group-addon">
                             <i class="glyphicon glyphicon-th"></i>
                         </span>
-                    </div>
+                    </div>                        
+                    @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
+
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.Address, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -57,30 +63,34 @@
                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.ConfirmEmail, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.TextBoxFor(m => m.ConfirmEmail, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmEmail, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="row">
                 @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
                     @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
+                <input type="submit" value="Register" class="btn btn-success" />
             </div>
         </div>
     }

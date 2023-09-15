@@ -70,6 +70,7 @@ namespace MediX.Models
         [Display(Name = "Email address")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Please confirm your email address.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
         [Display(Name = "Confirm email address")]
         [Compare("Email", ErrorMessage = "The email address and confirmation email address do not match.")]
@@ -96,12 +97,13 @@ namespace MediX.Models
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter a password.")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "Please confirm your password.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
