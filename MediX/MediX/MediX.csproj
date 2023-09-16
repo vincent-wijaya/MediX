@@ -190,6 +190,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Bookings1Controller.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\PatientBookingsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
@@ -428,12 +429,20 @@
     <Content Include="Views\Email\SendEmail.cshtml" />
     <Content Include="Views\Bookings\PatientIndex.cshtml" />
     <Content Include="Views\Bookings\PatientDetails .cshtml" />
+    <Content Include="Views\Bookings1\Create.cshtml" />
+    <Content Include="Views\Bookings1\Delete.cshtml" />
+    <Content Include="Views\Bookings1\Details.cshtml" />
+    <Content Include="Views\Bookings1\Edit.cshtml" />
+    <Content Include="Views\Bookings1\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\TestPatients\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

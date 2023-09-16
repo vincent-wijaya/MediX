@@ -18,7 +18,7 @@ namespace MediX.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private MediX_DatabaseModelContainer db = new MediX_DatabaseModelContainer();
+        private Entities db = new Entities();
 
         public AccountController()
         {

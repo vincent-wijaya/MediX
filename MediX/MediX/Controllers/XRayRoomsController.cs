@@ -12,7 +12,7 @@ namespace MediX.Controllers
 {
     public class XRayRoomsController : Controller
     {
-        private MediX_DatabaseModelContainer db = new MediX_DatabaseModelContainer();
+        private Entities db = new Entities();
 
         // GET: XRayRooms
         public ActionResult Index()

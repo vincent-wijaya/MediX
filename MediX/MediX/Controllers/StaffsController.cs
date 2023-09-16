@@ -12,7 +12,7 @@ namespace MediX.Controllers
 {
     public class StaffsController : Controller
     {
-        private MediX_DatabaseModelContainer db = new MediX_DatabaseModelContainer();
+        private Entities db = new Entities();
 
         // GET: Staffs
         public ActionResult Index()

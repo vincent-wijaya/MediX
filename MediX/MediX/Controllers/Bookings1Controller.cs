@@ -7,30 +7,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MediX.Models;
-using Microsoft.AspNet.Identity;
 
 namespace MediX.Controllers
 {
-    public class BookingsController : Controller
+    public class Bookings1Controller : Controller
     {
-        private Entities db = new Entities();
+        private MediX db = new MediX();
 
-        [Authorize]
-        // GET: Bookings
+        // GET: Bookings1
         public ActionResult Index()
         {
-            string currentUserId = User.Identity.GetUserId();
-            if (User.IsInRole("Standard"))
-            {
-                int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
-                return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom)
-                    .Where(m => m.PatientId == patientId).ToList());
-            }
-            return View(db.Bookings.ToList());
+            var bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom);
+            return View(bookings.ToList());
         }
 
-        [Authorize]
-        // GET: Bookings/Details/5
+        // GET: Bookings1/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -45,28 +36,16 @@ namespace MediX.Controllers
             return View(booking);
         }
 
-        [Authorize]
-        public JsonResult GetXRayRooms(int medicalCenterId)
-        {
-            var xRayRooms = db.XRayRooms.Include(x => x.RoomNumber).Where(x => x.MedicalCenterId == medicalCenterId).ToList();
-             
-            return Json(xRayRooms, JsonRequestBehavior.AllowGet);
-        }
-
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // GET: Bookings/Create
+        // GET: Bookings1/Create
         public ActionResult Create()
         {
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
-            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName");
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName");
             ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
-
             return View();
         }
 
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // POST: Bookings/Create
+        // POST: Bookings1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -80,15 +59,13 @@ namespace MediX.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
-            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
+            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             return View(booking);
         }
 
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // GET: Bookings/Edit/5
+        // GET: Bookings1/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -100,20 +77,18 @@ namespace MediX.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
             ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
-            ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
             return View(booking);
         }
 
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // POST: Bookings/Edit/5
+        // POST: Bookings1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateTime,Notes,IsCompleted,DateCreated,LastUpdated,PatientId,StaffId,XRayRoomId")] Booking booking)
+        public ActionResult Edit([Bind(Include = "Id,DateTime,Notes,IsCompleted,DateCreated,PatientId,StaffId,XRayRoomId")] Booking booking)
         {
             if (ModelState.IsValid)
             {
@@ -121,15 +96,13 @@ namespace MediX.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
             ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
-            ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
             return View(booking);
         }
 
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // GET: Bookings/Delete/5
+        // GET: Bookings1/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -144,8 +117,7 @@ namespace MediX.Controllers
             return View(booking);
         }
 
-        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
-        // POST: Bookings/Delete/5
+        // POST: Bookings1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
