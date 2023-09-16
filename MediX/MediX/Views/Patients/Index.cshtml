@@ -5,18 +5,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="d-inline">Patients</h2>
+    </div>
+    <div class="col-md-6 d-flex flex-column align-items-end">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
+    </div>
+</div>
 <table class="table">
     <tr>
         <th>
-            Name
+            @Html.DisplayNameFor(model => model.FullName)
         </th>
         <th>
-            Date of Birth
+            @Html.DisplayNameFor(model => model.DateOfBirth)
         </th>
         <th></th>
     </tr>
@@ -28,14 +31,20 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth);
+                @{
+                    var today = DateTime.Today;
+                    var age = today.Year - item.DateOfBirth.Year;
+
+                    var yearText = age == 1 ? "year" : "years";
+                }
+                @Html.DisplayFor(modelItem => item.DateOfBirth) (@Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText))
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
     }
 
-    </table>
+</table>

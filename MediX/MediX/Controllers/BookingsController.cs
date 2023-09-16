@@ -15,26 +15,22 @@ namespace MediX.Controllers
     {
         private MediX_DatabaseModelContainer db = new MediX_DatabaseModelContainer();
 
-
+        [Authorize]
         // GET: Bookings
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
 
-            IEnumerable<Booking> bookings;
             if (User.IsInRole("Standard"))
             {
                 int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
-                bookings = db.Bookings.Include(b => b.Patient).Include(b => b.BookerStaff).Include(b => b.XRayRoom).Include(b => b.Rating)
-                    .Where(m => m.PatientId == patientId);
+                return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom)
+                    .Where(m => m.PatientId == patientId).ToList());
             }
-            else
-            {
-                bookings = db.Bookings.Include(b => b.Patient).Include(b => b.BookerStaff).Include(b => b.XRayRoom).Include(b => b.Rating);
-            }
-            return View(bookings.ToList());
+            return View(db.Bookings.ToList());
         }
 
+        [Authorize]
         // GET: Bookings/Details/5
         public ActionResult Details(int? id)
         {
@@ -50,16 +46,23 @@ namespace MediX.Controllers
             return View(booking);
         }
 
+        [Authorize]
+        public JsonResult GetXRayRooms(int medicalCenterId)
+        {
+            var xRayRooms = db.XRayRooms.Include(x => x.RoomNumber).Where(x => x.MedicalCenterId == medicalCenterId).ToList();
+             
+            return Json(xRayRooms, JsonRequestBehavior.AllowGet);
+        }
+
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         // GET: Bookings/Create
-        public ActionResult Create(int? medicalCenterId)
+        public ActionResult Create()
         {
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id");
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
+            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
             ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
-            ViewBag.MedicalCenterName = new SelectList(db.MedicalCenters, "Id", "Name");
-            ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment");
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
 
-            var xRayRooms = db.XRayRooms.Where(m => m.MedicalCenterId == medicalCenterId);
             return View();
         }
 
@@ -78,10 +81,10 @@ namespace MediX.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
-            ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
+            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
+            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
+            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
             return View(booking);
         }
 

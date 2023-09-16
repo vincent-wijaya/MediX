@@ -78,7 +78,7 @@ CREATE TABLE [dbo].[Patients] (
     [Address] nvarchar(256)  NOT NULL,
     [AccountId] nvarchar(128)  NOT NULL,
     [Email] nvarchar(128)  NOT NULL,
-    [PhoneNumber] nvarchar(15)  NOT NULL
+    [PhoneNumber] nvarchar(15)
 );
 GO
 
@@ -92,7 +92,7 @@ CREATE TABLE [dbo].[Staffs] (
     [MedicalCenterId] int  NOT NULL,
     [AccountId] nvarchar(128)  NOT NULL,
     [Email] nvarchar(128)  NOT NULL,
-    [PhoneNumber] nvarchar(15)  NOT NULL
+    [PhoneNumber] nvarchar(15)
 );
 GO
 
@@ -197,6 +197,24 @@ GO
 CREATE INDEX [IX_FK_MedicalCenterXRayRoom]
 ON [dbo].[XRayRooms]
     ([MedicalCenterId]);
+GO
+
+-- Creating foreign key on [AccountId] in table 'Patients'
+ALTER TABLE [dbo].[Patients]
+ADD CONSTRAINT [FK_AspNetUserPatient]
+    FOREIGN KEY ([AccountId])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [AccountId] in table 'Staffs'
+ALTER TABLE [dbo].[Staffs]
+ADD CONSTRAINT [FK_AspNetUserStaff]
+    FOREIGN KEY ([AccountId])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating foreign key on [MedicalCenterId] in table 'Staffs'

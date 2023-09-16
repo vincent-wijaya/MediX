@@ -22,16 +22,10 @@ namespace MediX.Controllers
             string currentUserId = User.Identity.GetUserId();
 
             IEnumerable<Booking> bookings;
-            if (User.IsInRole("Standard"))
-            {
-                int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
-                bookings = db.Bookings.Include(b => b.Patient).Include(b => b.BookerStaff).Include(b => b.XRayRoom).Include(b => b.Rating)
-                    .Where(m => m.PatientId == patientId);
-            }
-            else
-            {
-                bookings = db.Bookings.Include(b => b.Patient).Include(b => b.BookerStaff).Include(b => b.XRayRoom).Include(b => b.Rating);
-            }
+            int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
+            bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom)
+                .Where(m => m.PatientId == patientId);
+
             return View(bookings.ToList());
         }
 

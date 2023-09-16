@@ -58,11 +58,11 @@ namespace MediX
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "43838238422-nqpgdiidr2d7qcern0q8b31gcputmab6.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

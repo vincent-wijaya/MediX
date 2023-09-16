@@ -33,14 +33,8 @@
             <div class="row">
                 @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 col-form-label" })
                 <div class="col-md-10">
-                    <div class="input-group date dateOfBirthPicker" data-provide="dateOfBirthPicker">
-                        @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
-                        <span class="input-group-addon">
-                            <i class="glyphicon glyphicon-th"></i>
-                        </span>
-                    </div>                        
+                    @Html.TextBoxFor(m => m.DateOfBirth, new { type = "date", @class = "form-control", placeholder = "Select a date", max = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
-
                 </div>
             </div>
             <div class="row">

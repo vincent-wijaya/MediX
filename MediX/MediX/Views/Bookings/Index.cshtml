@@ -6,92 +6,93 @@
 }
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
-<h2>Index</h2>
-<p>
-    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
-    {
-        @Html.ActionLink("Create New", "Create")
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="d-inline">Bookings</h2>
+    </div>
+    <div class="col-md-6 d-flex flex-column align-items-end">
+        @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+        {
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
+        }
+    </div>
+</div>
+@*<div id="calendar"></div>
+    <div style="display: none">*@
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </th>
+        @if (!User.IsInRole("Standard"))
+        {
+            <th>
+                Patient Name
+            </th>
+        }
+        <th>
+            Medical Center
+        </th>
+        <th>
+            Booked by
+        </th>
+        <th></th>
+    </tr>
+
+    @{ 
+        var index = 0;
     }
-</p>
-<div id="calendar"></div>
-<div style="display: none">
-    <table class="table">
+    @foreach (var item in Model)
+    {
+        index++;
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsCompleted)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Patient.Id)
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.BookerStaff.Id)*@
-                Staff
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.XRayRoom.RoomNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating.Comment)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => index)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            @if (!User.IsInRole("Standard"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.FullName)
+                </td>
+            }
+            <td>
+                @Html.ActionLink(item.XRayRoom.MedicalCenter.Name, "Details", "MedicalCenters", new { id = item.XRayRoom.MedicalCenter.Id }, null)
+            </td>
+            <td>
+                @if (!User.IsInRole("Standard"))
+                {
+                    @Html.ActionLink(item.BookerStaff.FullName, "Details", "Staffs", new { id = item.BookerStaff.Id }, null)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.BookerStaff.FullName)
+                }
+            </td>
+            <td>
+                @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+            </td>
         </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notes)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsCompleted)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Patient.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookerStaff.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.XRayRoom.RoomNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating.Comment)
-                </td>
-                <td>
-                    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                    }
-                    |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id, @class = "btn btn-primary" }) |
-                    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    }
-                </td>
-            </tr>
 
+    }
 
-        }
+</table>
 
-    </table>
-
-</div>
+@*</div>*@
 
 
 @section Scripts {

@@ -5,45 +5,69 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@Html.DisplayFor(model => model.FullName)</h2>
+                    <hr />
 
-<div>
-    <h4>Patient</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dd>
-            Name
-        </dd>
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Name:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.FullName)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                        <dt class="col-sm-3">
+                            Date of Birth:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.DateOfBirth)
+                        </dd>
 
-        <dd>
-            @Html.DisplayNameFor(model => model.Email)
-        </dd>
+                        <dt class="col-sm-3">
+                            Age:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @{
+                                var today = DateTime.Today;
+                                var age = today.Year - Model.DateOfBirth.Year;
+                                var yearText = age == 1 ? "year" : "years";
+                            }
+                            @Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                        <dt class="col-sm-3">
+                            Email:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
 
-        <dd>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dd>
+                        <dt class="col-sm-3">
+                            Phone Number:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.PhoneNumber)
+                        </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
+                        <dt class="col-sm-3">
+                            Address:
+                        </dt>
+                        <dd class="col-sm-9">
+                            @Html.DisplayFor(model => model.Address)
+                        </dd>
+                    </dl>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
 
-        <dd>
-            @Html.DisplayNameFor(model => model.Address)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-    </dl>
+            <div class="mt-3">
+                <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

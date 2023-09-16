@@ -38,7 +38,7 @@ namespace MediX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendEmail(SendEmailViewModel model)
         {
-            var from = new EmailAddress("vwij0004@student.monash.edu", "MediX");
+            var from = new EmailAddress("vincentwijayaaaaa@gmail.com", "MediX");
             var to = new EmailAddress(model.Email, "to");
             var plainTextContent = model.Body;
             var htmlContent = "<strong>"+ plainTextContent + "</strong>";

@@ -5,66 +5,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="container"><div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@Html.DisplayFor(model => model.FullName)</h2>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Email):</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
 
-<div>
-    <h4>Staff</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dd>
-            "Name"
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.PhoneNumber):</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.PhoneNumber)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Detail.FirstName + " " + model.Detail.LastName)
-        </dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Address):</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Address)</dd>
 
-        <dd>
-            @Html.DisplayNameFor(model => model.Detail.Email)
-        </dd>
+                        <dt class="col-sm-4">Medical Center:</dt>
+                        <dd class="col-sm-8">
+                            @Html.ActionLink(Model.MedicalCenter.Name, "Details", "MedicalCenters", new { id = Model.MedicalCenter.Id }, null)
+                        </dd>
+                    </dl>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary align-self-right" })
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Detail.Email)
-        </dd>
-
-        <dd>
-            @Html.DisplayNameFor(model => model.Detail.PhoneNumber)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.Detail.PhoneNumber)
-        </dd>
-
-        <dd>
-            @Html.DisplayNameFor(model => model.Detail.Address)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.Detail.Address)
-        </dd>
-
-        <dd>
-            @Html.DisplayNameFor(model => model.Detail.Email)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.Detail.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MedicalCenter.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MedicalCenter.Name)
-        </dd>
-
-        <dd>
-            @Html.DisplayFor(model => model.Detail.Email)
-        </dd>
-    </dl>
+    <div class="mt-3">
+        <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

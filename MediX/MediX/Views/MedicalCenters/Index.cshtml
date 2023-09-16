@@ -6,13 +6,19 @@
 }
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="d-inline">Medical Centers</h2>
+    </div>
+    <div class="col-md-6 d-flex flex-column align-items-end">
+        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
+    </div>
+</div>
 <table class="table">
     <tr>
+        <th>
+            #
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -20,23 +26,21 @@
             @Html.DisplayNameFor(model => model.Address)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.OpenTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CloseTime)
         </th>
         <th></th>
     </tr>
 
+    @{ 
+        var index = 0;
+    }
     @foreach (var item in Model)
     {
+        index++;
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => index)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -44,21 +48,18 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Longitude)
+                @Html.DisplayFor(modelItem => item.OpenTime) - @Html.DisplayFor(modelItem => item.CloseTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Latitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CloseTime)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id, @class = "btn btn-primary" }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @if (User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                }
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                @if (User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
             </td>
         </tr>
     }

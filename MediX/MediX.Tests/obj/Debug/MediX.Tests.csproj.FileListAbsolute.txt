@@ -128,3 +128,5 @@ C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\obj\Debug\MediX.Tests.csproj.CopyComplete
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\obj\Debug\MediX.Tests.dll
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\obj\Debug\MediX.Tests.pdb
+C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml

@@ -19,7 +19,7 @@ namespace Example
         {
             var apiKey = Environment.GetEnvironmentVariable("SendgridKey");
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("vwij0004@student.monash.edu", "MediX");
+            var from = new EmailAddress("vincentwijayaaaaa@gmail.com", "MediX");
             var subject = "Sending with SendGrid is Fun";
             var to = new EmailAddress("vincentwijaya2001@yahoo.com", "VW");
             var plainTextContent = "and easy to do anywhere, even with C#";
