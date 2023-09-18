@@ -10,41 +10,67 @@
         <h2 class="d-inline">Patients</h2>
     </div>
     <div class="col-md-6 d-flex flex-column align-items-end">
-        @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
+        @if (User.IsInRole("Administrator"))
+        {
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
+        }
     </div>
 </div>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @{
-                    var today = DateTime.Today;
-                    var age = today.Year - item.DateOfBirth.Year;
-
-                    var yearText = age == 1 ? "year" : "years";
-                }
-                @Html.DisplayFor(modelItem => item.DateOfBirth) (@Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText))
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
-            </td>
+            <th>
+                #
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
 
+
+    <tbody>
+        @{
+            var index = 0;
+        }
+        @foreach (var item in Model)
+        {
+            index++;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => index)
+                </td>
+                <td>
+                    @Html.DisplayNameFor(model => model.FirstName) @Html.DisplayNameFor(model => model.LastName)
+                </td>
+                <td>
+                    @{
+                        var today = DateTime.Today;
+                        var age = today.Year - item.DateOfBirth.Year;
+
+                        var yearText = age == 1 ? "year" : "years";
+                    }
+                    @Html.DisplayFor(modelItem => item.DateOfBirth) (@Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText))
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatable")
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}

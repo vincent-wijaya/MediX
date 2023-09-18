@@ -31,6 +31,12 @@ namespace MediX
                     "~/Scripts/lib/moment.min.js",
                     "~/Scripts/fullcalendar.js",
                     "~/Scripts/calendar.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
+                    "~/Scripts/lib/jquery.min.js",
+                    "~/Scripts/DataTables/jquery.dataTables.min.js",
+                    "~/Scripts/DataTables/dataTables.bootstrap.min.js"
+                ));
         }
     }
 }

@@ -14,6 +14,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace MediX.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -130,3 +130,9 @@ C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\obj\Debug\MediX.Tests.pdb
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.dll
 C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\SendGrid.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\StarkbankEcdsa.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\SendGrid.pdb
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\SendGrid.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml
