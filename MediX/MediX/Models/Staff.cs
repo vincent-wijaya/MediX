@@ -11,7 +11,9 @@ namespace MediX.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Staff
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,17 +23,32 @@ namespace MediX.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
+        [DisplayName("Full Name")]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
+        [DisplayName("DOB")]
+        [DisplayFormat(DataFormatString = "{0:d MMMM yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
         public int MedicalCenterId { get; set; }
         public string AccountId { get; set; }
+        [DisplayName("Email Address")]
         public string Email { get; set; }
+        [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
+        [DisplayName("Medical Center")]
         public virtual MedicalCenter MedicalCenter { get; set; }
     }
 }

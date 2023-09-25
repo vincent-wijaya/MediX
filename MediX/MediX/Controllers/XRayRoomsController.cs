@@ -15,6 +15,7 @@ namespace MediX.Controllers
         private Entities db = new Entities();
 
         // GET: XRayRooms
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Index()
         {
             var xRayRooms = db.XRayRooms.Include(x => x.MedicalCenter);
@@ -22,6 +23,7 @@ namespace MediX.Controllers
         }
 
         // GET: XRayRooms/Details/5
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace MediX.Controllers
         }
 
         // GET: XRayRooms/Create
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Create()
         {
             ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
@@ -46,6 +49,7 @@ namespace MediX.Controllers
         // POST: XRayRooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,RoomNumber,MedicalCenterId")] XRayRoom xRayRoom)
@@ -62,6 +66,7 @@ namespace MediX.Controllers
         }
 
         // GET: XRayRooms/Edit/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +85,7 @@ namespace MediX.Controllers
         // POST: XRayRooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,RoomNumber,MedicalCenterId")] XRayRoom xRayRoom)
@@ -95,6 +101,7 @@ namespace MediX.Controllers
         }
 
         // GET: XRayRooms/Delete/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +117,7 @@ namespace MediX.Controllers
         }
 
         // POST: XRayRooms/Delete/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

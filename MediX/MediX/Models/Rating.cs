@@ -11,7 +11,8 @@ namespace MediX.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Rating
     {
         public int Id { get; set; }
@@ -22,6 +23,7 @@ namespace MediX.Models
         public int Booking_Id { get; set; }
     
         public virtual Booking Booking { get; set; }
+        [DisplayName("Medical Center")]
         public virtual MedicalCenter MedicalCenter { get; set; }
         public virtual Patient Patient { get; set; }
     }

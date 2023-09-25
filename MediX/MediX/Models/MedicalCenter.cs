@@ -11,7 +11,9 @@ namespace MediX.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
+    [DisplayName("Medical Center")]
     public partial class MedicalCenter
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,7 +29,9 @@ namespace MediX.Models
         public string Address { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+        [DisplayName("Open Time")]
         public System.TimeSpan OpenTime { get; set; }
+        [DisplayName("Close Time")]
         public System.TimeSpan CloseTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -35,6 +39,7 @@ namespace MediX.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Staff> Staffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DisplayName("X-Ray Rooms")]
         public virtual ICollection<XRayRoom> XRayRooms { get; set; }
     }
 }

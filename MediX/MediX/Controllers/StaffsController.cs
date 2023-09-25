@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MediX.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MediX.Controllers
 {
@@ -15,6 +16,7 @@ namespace MediX.Controllers
         private Entities db = new Entities();
 
         // GET: Staffs
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Index()
         {
             var staffs = db.Staffs.Include(s => s.MedicalCenter);
@@ -22,6 +24,7 @@ namespace MediX.Controllers
         }
 
         // GET: Staffs/Details/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +40,7 @@ namespace MediX.Controllers
         }
 
         // GET: Staffs/Create
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Create()
         {
             ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
@@ -46,11 +50,16 @@ namespace MediX.Controllers
         // POST: Staffs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,DateOfBirth,Address,Email,PhoneNumber,LastUpdated,Role,MedicalCenterId")] Staff staff)
         {
-            if (ModelState.IsValid)
+            //var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
+            //var result = await UserManager.CreateAsync(user, model.Password);
+            //await UserManager.AddToRoleAsync(user.Id, "Standard");
+
+             if (ModelState.IsValid)
             {
                 db.Staffs.Add(staff);
                 db.SaveChanges();
@@ -62,6 +71,7 @@ namespace MediX.Controllers
         }
 
         // GET: Staffs/Edit/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,6 +90,7 @@ namespace MediX.Controllers
         // POST: Staffs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Id,FirstName,LastName,DateOfBirth,Address,Email,PhoneNumber,LastUpdated,Role,MedicalCenterId")] Staff staff)
@@ -95,6 +106,7 @@ namespace MediX.Controllers
         }
 
         // GET: Staffs/Delete/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -110,6 +122,7 @@ namespace MediX.Controllers
         }
 
         // POST: Staffs/Delete/5
+        [Authorize(Roles = "FacilityManager, Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

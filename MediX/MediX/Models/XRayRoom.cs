@@ -11,7 +11,9 @@ namespace MediX.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
+    [DisplayName("X-Ray Room")]
     public partial class XRayRoom
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +23,7 @@ namespace MediX.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Room Number")]
         public string RoomNumber { get; set; }
         public int MedicalCenterId { get; set; }
     

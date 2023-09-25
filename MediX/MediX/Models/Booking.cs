@@ -11,7 +11,8 @@ namespace MediX.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Booking
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +22,11 @@ namespace MediX.Models
         }
     
         public int Id { get; set; }
+        [DisplayName("Session")]
         public System.DateTime DateTime { get; set; }
         public string Notes { get; set; }
         public bool IsCompleted { get; set; }
+        [DisplayName("Created on")]
         public System.DateTime DateCreated { get; set; }
         public int PatientId { get; set; }
         public int StaffId { get; set; }
@@ -33,6 +36,7 @@ namespace MediX.Models
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual Staff Staff { get; set; }
+        [DisplayName("X-Ray Room")]
         public virtual XRayRoom XRayRoom { get; set; }
     }
 }

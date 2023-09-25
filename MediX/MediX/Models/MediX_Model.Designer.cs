@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Vincent Wijaya\Desktop\FIT5032\MediX\FIT5032_Project\MediX\MediX\Models\MediX_Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\Models\MediX_Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

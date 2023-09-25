@@ -15,12 +15,14 @@ namespace MediX.Controllers
         private Entities db = new Entities();
 
         // GET: Patients
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Index()
         {
             return View(db.Patients.ToList());
         }
 
         // GET: Patients/Details/5
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace MediX.Controllers
         }
 
         // GET: Patients/Create
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +47,7 @@ namespace MediX.Controllers
         // POST: Patients/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,DateOfBirth,Address")] Patient patient)
@@ -60,6 +64,7 @@ namespace MediX.Controllers
         }
 
         // GET: Patients/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +82,7 @@ namespace MediX.Controllers
         // POST: Patients/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,DateOfBirth,Address,Email,PhoneNumber,LastUpdated,Role")] Patient patient)
@@ -91,6 +97,7 @@ namespace MediX.Controllers
         }
 
         // GET: Patients/Delete/5
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +113,7 @@ namespace MediX.Controllers
         }
 
         // POST: Patients/Delete/5
+        [Authorize(Roles = "MedicalStaff, FacilityManager, Administrator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

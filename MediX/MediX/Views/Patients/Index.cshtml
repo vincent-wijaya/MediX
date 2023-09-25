@@ -9,7 +9,7 @@
     <div class="col-md-6">
         <h2 class="d-inline">Patients</h2>
     </div>
-    <div class="col-md-6 d-flex flex-column align-items-end">
+    <div class="col-md-6 d-flex flex-column align-items-end mb-md-3">
         @if (User.IsInRole("Administrator"))
         {
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
@@ -28,6 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bookings)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -45,7 +48,7 @@
                     @Html.DisplayFor(modelItem => index)
                 </td>
                 <td>
-                    @Html.DisplayNameFor(model => model.FirstName) @Html.DisplayNameFor(model => model.LastName)
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
                     @{
@@ -57,11 +60,15 @@
                     @Html.DisplayFor(modelItem => item.DateOfBirth) (@Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText))
                 </td>
                 <td>
+                    @Html.ActionLink("Bookings", "Index", "Bookings", new { id = item.Id }, new { @class = "btn btn-primary" })
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
+
         }
     </tbody>
 </table>
