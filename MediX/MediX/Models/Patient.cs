@@ -13,7 +13,7 @@ namespace MediX.Models
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class Patient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +22,7 @@ namespace MediX.Models
             this.Bookings = new HashSet<Booking>();
             this.Ratings = new HashSet<Rating>();
         }
-    
+
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -45,7 +45,7 @@ namespace MediX.Models
         public string Email { get; set; }
         [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

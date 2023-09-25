@@ -21,7 +21,7 @@ namespace MediX.Models
         public int MedicalCenterId { get; set; }
         public int PatientId { get; set; }
         public int Booking_Id { get; set; }
-    
+
         public virtual Booking Booking { get; set; }
         [DisplayName("Medical Center")]
         public virtual MedicalCenter MedicalCenter { get; set; }

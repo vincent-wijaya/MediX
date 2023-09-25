@@ -23,7 +23,7 @@ namespace MediX.Models
             this.Staffs = new HashSet<Staff>();
             this.XRayRooms = new HashSet<XRayRoom>();
         }
-    
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -33,7 +33,7 @@ namespace MediX.Models
         public System.TimeSpan OpenTime { get; set; }
         [DisplayName("Close Time")]
         public System.TimeSpan CloseTime { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

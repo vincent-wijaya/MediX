@@ -5,17 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Create Staff Account</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
-    <h4>Staff</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MedicalCenter, "MedicalCenterId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MedicalCenterId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MedicalCenterId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
     <div class="form-group">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -33,10 +48,10 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.DateOfBirth, new { @class = "col-md-2 col-form-label" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(m => m.DateOfBirth, new { type = "date", @class = "form-control", placeholder = "Select a date", max = DateTime.Now.ToString("yyyy-MM-dd") })
+            @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -45,22 +60,6 @@
         <div class="col-md-10">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.MedicalCenterId, "MedicalCenterId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("MedicalCenterId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.MedicalCenterId, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -78,4 +77,14 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dateOfBirthPicker').datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: new Date(1900, 0, 1),
+                endDate: new Date(),
+            });
+        })
+    </script>
 }

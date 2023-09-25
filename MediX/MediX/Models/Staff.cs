@@ -21,7 +21,7 @@ namespace MediX.Models
         {
             this.Bookings = new HashSet<Booking>();
         }
-    
+
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -43,9 +43,7 @@ namespace MediX.Models
         public string AccountId { get; set; }
         [DisplayName("Email Address")]
         public string Email { get; set; }
-        [DisplayName("Phone Number")]
-        public string PhoneNumber { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         [DisplayName("Medical Center")]

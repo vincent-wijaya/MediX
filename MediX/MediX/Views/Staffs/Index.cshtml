@@ -7,7 +7,7 @@
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
-<div class="row">
+<div class="row mb-md-3">
     <div class="col-md-6">
         <h2 class="d-inline">Staffs</h2>
     </div>
@@ -26,9 +26,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
             <th>
                 Medical Center
@@ -53,9 +50,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
                     @Html.ActionLink(item.MedicalCenter.Name, "Details", "MedicalCenters", new { id = item.MedicalCenter.Id }, null)

@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="row">
+<div class="row mb-md-3">
     <div class="col-md-6">
         <h2 class="d-inline">Patients</h2>
     </div>
-    <div class="col-md-6 d-flex flex-column align-items-end mb-md-3">
+    <div class="col-md-6 d-flex flex-column align-items-end">
         @if (User.IsInRole("Administrator"))
         {
             @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })

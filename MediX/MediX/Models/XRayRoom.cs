@@ -21,12 +21,12 @@ namespace MediX.Models
         {
             this.Bookings = new HashSet<Booking>();
         }
-    
+
         public int Id { get; set; }
         [DisplayName("Room Number")]
         public string RoomNumber { get; set; }
         public int MedicalCenterId { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual MedicalCenter MedicalCenter { get; set; }

@@ -73,7 +73,6 @@
     <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
     <Property Name="AccountId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Bookings" Relationship="Self.FK_StaffBooking" FromRole="Staffs" ToRole="Bookings" />
     <NavigationProperty Name="MedicalCenter" Relationship="Self.FK_MedicalCenterStaff" FromRole="Staffs" ToRole="MedicalCenters" />
   </EntityType>
