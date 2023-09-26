@@ -12,6 +12,25 @@ namespace MediX.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
+    public class MultipleOf30MinutesAttribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value != null && value is DateTime)
+            {
+                DateTime dateTime = (DateTime)value;
+
+                if (dateTime.Minute % 30 != 0)
+                {
+                    return new ValidationResult("The time must be in multiples of 30 minutes.");
+                }
+            }
+
+            return ValidationResult.Success;
+        }
+    }
 
     public partial class Booking
     {
@@ -23,6 +42,8 @@ namespace MediX.Models
 
         public int Id { get; set; }
         [DisplayName("Session")]
+        [Required(ErrorMessage = "Booking date and time are required.")]
+        [MultipleOf30Minutes(ErrorMessage = "The time must be in multiples of 30 minutes.")]
         public System.DateTime DateTime { get; set; }
         public string Notes { get; set; }
         public bool IsCompleted { get; set; }
@@ -30,6 +51,7 @@ namespace MediX.Models
         public System.DateTime DateCreated { get; set; }
         public int PatientId { get; set; }
         public int StaffId { get; set; }
+        [Required(ErrorMessage = "X-Ray room is required.")]
         public int XRayRoomId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

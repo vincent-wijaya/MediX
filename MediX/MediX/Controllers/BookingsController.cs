@@ -48,8 +48,9 @@ namespace MediX.Controllers
         [Authorize]
         public JsonResult GetXRayRooms(int medicalCenterId)
         {
-            var xRayRooms = db.XRayRooms.Include(x => x.RoomNumber).Where(x => x.MedicalCenterId == medicalCenterId).ToList();
-             
+            var xRayRooms = db.XRayRooms.Where(x => x.MedicalCenterId == medicalCenterId).Select(x => new { Id = x.Id, RoomNumber = x.RoomNumber }).OrderBy(x => x.RoomNumber).ToList();
+            xRayRooms.Insert(0, new { Id = 0, RoomNumber = "Select X-Ray Room Number" });
+
             return Json(xRayRooms, JsonRequestBehavior.AllowGet);
         }
 
@@ -71,8 +72,9 @@ namespace MediX.Controllers
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,Notes,IsCompleted,DateCreated,PatientId,StaffId,XRayRoomId")] Booking booking)
+        public ActionResult Create([Bind(Include = "Id,DateTime,Notes,IsCompleted,DateCreated,PatientId,XRayRoomId")] Booking booking)
         {
+            booking.StaffId = db.Staffs.Where(s => s.AccountId == User.Identity.GetUserId()).First().Id;
             if (ModelState.IsValid)
             {
                 db.Bookings.Add(booking);

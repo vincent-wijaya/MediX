@@ -89,13 +89,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.dateOfBirthPicker').datepicker({
-                format: 'dd/mm/yyyy',
-                startDate: new Date(1900, 0, 1),
-                endDate: new Date(),
-            });
-        })
-    </script>
 }

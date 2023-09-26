@@ -4,74 +4,52 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
-<h2>Create</h2>
-
+<h2 class="mt-4">New Booking</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Booking</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        Date and Time
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.DateTime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", placeholder = "Select a date and time", id = "datetimepicker" })
-            @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
 
+                <div class="form-group">
+                    @Html.LabelFor(m => m.DateTime, new { @class = "col-md-2 col-form-label" })
+                    @Html.TextBoxFor(m => m.DateTime, new { type = "datetime-local", @class = "form-control", placeholder = "Select a date", step = 30 * 60, min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        Patient
-        <div class="col-md-10">
-            @Html.DropDownList("PatientId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="form-group">
+                    @Html.Label("Patient", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("PatientId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        Medical Center
-        <div class="col-md-10">
-            @Html.DropDownList("MedicalCenterId", null, htmlAttributes: new { @class = "form-control" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        X-Ray Room Number
-        <div class="col-md-10">
-            @Html.DropDownList("XRayRoomId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.XRayRoomId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <div class="input-group">
-                @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", rows = "5" })
+                <div class="form-group">
+                    @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", onchange = "getAndPopulateXRayRooms()" })
+                </div>
+                <div class="form-group">
+                    <label for="xrayRoom">X-Ray Room Number</label>
+                    @Html.DropDownList("XRayRoomId", null, "Select X-Ray Room", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.XRayRoomId, "", new { @class = "text-danger" })
+                </div>
             </div>
-            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        Booked by
-        <div class="col-md-10">
-            @Html.DropDownList("StaffId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="col-md-6">
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", rows = "5" })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
 
@@ -89,31 +67,43 @@
             </tr>
         </table>
     </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+
+<div class="mt-3">
+
+    <div class="form-group">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
-    @Scripts.Render("~/bundles/fullcalendar")
-    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*@Scripts.Render("~/bundles/fullcalendar")*@
     <script>
-
-        $(document).ready(function () {
-            $("#datetimepicker").datetimepicker({
-                dateFormat: "yy-mm-dd",
-                timeFormat: "HH:mm",
-                stepMinute: 30,
-                minDate: 0,
-                showButtonPanel: true,
-                controlType: 'select',
-                oneLine: true
-            });
-        });
+        function getAndPopulateXRayRooms() {
+            var medicalCenterId = $('#MedicalCenterId').val();
+            if (medicalCenterId) {
+                $.ajax({
+                    url: '/Bookings/GetXRayRooms',
+                    type: 'GET',
+                    data: { medicalCenterId: medicalCenterId },
+                    success: function (data) {
+                        var xRayRoomDropdown = $('#XRayRoomId');
+                        xRayRoomDropdown.empty();
+                        $.each(data, function (index, item) {
+                            xRayRoomDropdown.append($('<option></option>').val(item.Id).text(item.RoomNumber));
+                        });
+                    },
+                    error: function (error) {
+                        console.error('Error fetching X-ray rooms:', error);
+                    }
+                });
+            }
+        }
     </script>
+
 }
