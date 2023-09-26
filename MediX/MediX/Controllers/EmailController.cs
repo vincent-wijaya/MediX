@@ -16,7 +16,8 @@ namespace MediX.Controllers
 
         public EmailController()
         {
-            var apiKey = System.Configuration.ConfigurationManager.AppSettings["SendGridApiKey"];
+            var apiKey = Environment.GetEnvironmentVariable("SendGridAPIKey");
+                //System.Configuration.ConfigurationManager.AppSettings["SendGridApiKey"];
 
             if (string.IsNullOrEmpty(apiKey))
             {
