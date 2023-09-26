@@ -18,10 +18,27 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", onchange = "populateBookingTimes()" })
+                </div>
+
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.DateTime, new { @class = "col-md-2 col-form-label" })
-                    @Html.TextBoxFor(m => m.DateTime, new { type = "datetime-local", @class = "form-control", placeholder = "Select a date", step = 30 * 60, min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.LabelFor(m => "Date", new { @class = "col-md-2 col-form-label" })
+                    @Html.TextBox("Date", new { type = "date", @class = "form-control", placeholder = "Select a date", min = DateTime.Now.ToString("yyyy-MM-dd"), id = "bookingDate" })
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Time", new { @class = "col-md-2 col-form-label" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Time", new SelectList(new List<string>(), "Value", "Text"), "Select a time", new { @class = "form-control", id = "timeDropdown" })
+                        @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" style="display:none;">
+                    @Html.TextBoxFor(m => m.DateTime, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", id = "DateTime" })
                     @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
                 </div>
 
@@ -31,15 +48,6 @@
                     @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group">
-                    @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", onchange = "getAndPopulateXRayRooms()" })
-                </div>
-                <div class="form-group">
-                    <label for="xrayRoom">X-Ray Room Number</label>
-                    @Html.DropDownList("XRayRoomId", null, "Select X-Ray Room", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.XRayRoomId, "", new { @class = "text-danger" })
-                </div>
             </div>
 
             <div class="col-md-6">
@@ -84,22 +92,27 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     @*@Scripts.Render("~/bundles/fullcalendar")*@
     <script>
-        function getAndPopulateXRayRooms() {
+        function populateBookingTimes() {
             var medicalCenterId = $('#MedicalCenterId').val();
+            var bookingDate = $('#bookingDate').val();
             if (medicalCenterId) {
                 $.ajax({
-                    url: '/Bookings/GetXRayRooms',
+                    url: '/Bookings/GetPossibleBookingTimes',
                     type: 'GET',
-                    data: { medicalCenterId: medicalCenterId },
+                    data: { medicalCenterId: medicalCenterId, date: bookingDate },
                     success: function (data) {
-                        var xRayRoomDropdown = $('#XRayRoomId');
-                        xRayRoomDropdown.empty();
-                        $.each(data, function (index, item) {
-                            xRayRoomDropdown.append($('<option></option>').val(item.Id).text(item.RoomNumber));
+                        var timeDropdown = $('#timeDropdown');
+                        timeDropdown.empty();
+                        $.each(data.possibleBookingTimes, function (index, time) {
+                            var option = $('<option></option>').attr('value, time').text(time);
+                            if (data.bookedTimes.includes(time)) {
+                                option.prop('disabled', true);
+                            }
+                            timeDropdown.append(option);
                         });
                     },
                     error: function (error) {
-                        console.error('Error fetching X-ray rooms:', error);
+                        console.error('Error fetching possible booking times:', error);
                     }
                 });
             }

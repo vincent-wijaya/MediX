@@ -63,14 +63,6 @@
     <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
   </EntityType>
-  <EntityType Name="XRayRooms">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoomNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-    <Property Name="MedicalCenterId" Type="int" Nullable="false" />
-  </EntityType>
   <Association Name="FK_BookingRating">
     <End Role="Bookings" Type="Self.Bookings" Multiplicity="1" />
     <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
@@ -103,18 +95,6 @@
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Staffs">
-        <PropertyRef Name="MedicalCenterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_MedicalCenterXRayRoom">
-    <End Role="MedicalCenters" Type="Self.MedicalCenters" Multiplicity="1" />
-    <End Role="XRayRooms" Type="Self.XRayRooms" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MedicalCenters">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="XRayRooms">
         <PropertyRef Name="MedicalCenterId" />
       </Dependent>
     </ReferentialConstraint>
@@ -155,25 +135,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_XRayRoomBooking">
-    <End Role="XRayRooms" Type="Self.XRayRooms" Multiplicity="1" />
-    <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="XRayRooms">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Bookings">
-        <PropertyRef Name="XRayRoomId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="MediX_ModelStoreContainer">
     <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MedicalCenters" EntityType="Self.MedicalCenters" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staffs" EntityType="Self.Staffs" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="XRayRooms" EntityType="Self.XRayRooms" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_BookingRating" Association="Self.FK_BookingRating">
       <End Role="Bookings" EntitySet="Bookings" />
       <End Role="Ratings" EntitySet="Ratings" />
@@ -186,10 +153,6 @@
       <End Role="MedicalCenters" EntitySet="MedicalCenters" />
       <End Role="Staffs" EntitySet="Staffs" />
     </AssociationSet>
-    <AssociationSet Name="FK_MedicalCenterXRayRoom" Association="Self.FK_MedicalCenterXRayRoom">
-      <End Role="MedicalCenters" EntitySet="MedicalCenters" />
-      <End Role="XRayRooms" EntitySet="XRayRooms" />
-    </AssociationSet>
     <AssociationSet Name="FK_PatientBooking" Association="Self.FK_PatientBooking">
       <End Role="Patients" EntitySet="Patients" />
       <End Role="Bookings" EntitySet="Bookings" />
@@ -200,10 +163,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_StaffBooking" Association="Self.FK_StaffBooking">
       <End Role="Staffs" EntitySet="Staffs" />
-      <End Role="Bookings" EntitySet="Bookings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_XRayRoomBooking" Association="Self.FK_XRayRoomBooking">
-      <End Role="XRayRooms" EntitySet="XRayRooms" />
       <End Role="Bookings" EntitySet="Bookings" />
     </AssociationSet>
   </EntityContainer>

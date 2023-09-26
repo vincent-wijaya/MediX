@@ -4,13 +4,8 @@
     <EntitySet Name="Patients" EntityType="MediX_DatabaseModel.Store.Patients" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Staffs" EntityType="MediX_DatabaseModel.Store.Staffs" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="MedicalCenters" EntityType="MediX_DatabaseModel.Store.MedicalCenters" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="XRayRooms" EntityType="MediX_DatabaseModel.Store.XRayRooms" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Ratings" EntityType="MediX_DatabaseModel.Store.Ratings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Bookings" EntityType="MediX_DatabaseModel.Store.Bookings" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="MedicalCenterXRayRoom" Association="MediX_DatabaseModel.Store.MedicalCenterXRayRoom">
-      <End Role="MedicalCenter" EntitySet="MedicalCenters" />
-      <End Role="XRayRoom" EntitySet="XRayRooms" />
-    </AssociationSet>
     <AssociationSet Name="MedicalCenterStaff" Association="MediX_DatabaseModel.Store.MedicalCenterStaff">
       <End Role="MedicalCenter" EntitySet="MedicalCenters" />
       <End Role="Staff" EntitySet="Staffs" />
@@ -25,10 +20,6 @@
     </AssociationSet>
     <AssociationSet Name="StaffBooking" Association="MediX_DatabaseModel.Store.StaffBooking">
       <End Role="Staff" EntitySet="Staffs" />
-      <End Role="Booking" EntitySet="Bookings" />
-    </AssociationSet>
-    <AssociationSet Name="XRayRoomBooking" Association="MediX_DatabaseModel.Store.XRayRoomBooking">
-      <End Role="XRayRoom" EntitySet="XRayRooms" />
       <End Role="Booking" EntitySet="Bookings" />
     </AssociationSet>
     <AssociationSet Name="BookingRating" Association="MediX_DatabaseModel.Store.BookingRating">
@@ -79,14 +70,6 @@
     <Property Name="OpenTime" Type="time" Nullable="false" Precision="7" />
     <Property Name="CloseTime" Type="time" Nullable="false" Precision="7" />
   </EntityType>
-  <EntityType Name="XRayRooms">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="RoomNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
-    <Property Name="MedicalCenterId" Type="int" Nullable="false" />
-  </EntityType>
   <EntityType Name="Ratings">
     <Key>
       <PropertyRef Name="Id" />
@@ -111,18 +94,6 @@
     <Property Name="StaffId" Type="int" Nullable="false" />
     <Property Name="XRayRoomId" Type="int" Nullable="false" />
   </EntityType>
-  <Association Name="MedicalCenterXRayRoom">
-    <End Role="MedicalCenter" Type="MediX_DatabaseModel.Store.MedicalCenters" Multiplicity="1" />
-    <End Role="XRayRoom" Type="MediX_DatabaseModel.Store.XRayRooms" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MedicalCenter">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="XRayRoom">
-        <PropertyRef Name="MedicalCenterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="MedicalCenterStaff">
     <End Role="MedicalCenter" Type="MediX_DatabaseModel.Store.MedicalCenters" Multiplicity="1" />
     <End Role="Staff" Type="MediX_DatabaseModel.Store.Staffs" Multiplicity="*" />
@@ -168,18 +139,6 @@
       </Principal>
       <Dependent Role="Booking">
         <PropertyRef Name="StaffId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="XRayRoomBooking">
-    <End Role="XRayRoom" Type="MediX_DatabaseModel.Store.XRayRooms" Multiplicity="1" />
-    <End Role="Booking" Type="MediX_DatabaseModel.Store.Bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="XRayRoom">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="XRayRoomId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

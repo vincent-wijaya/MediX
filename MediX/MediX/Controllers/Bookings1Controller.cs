@@ -17,7 +17,7 @@ namespace MediX.Controllers
         // GET: Bookings1
         public ActionResult Index()
         {
-            var bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom);
+            var bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff);
             return View(bookings.ToList());
         }
 
@@ -41,7 +41,6 @@ namespace MediX.Controllers
         {
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName");
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName");
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
             return View();
         }
 
@@ -61,7 +60,6 @@ namespace MediX.Controllers
 
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             return View(booking);
         }
 
@@ -79,7 +77,6 @@ namespace MediX.Controllers
             }
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             return View(booking);
         }
 
@@ -98,7 +95,6 @@ namespace MediX.Controllers
             }
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FirstName", booking.PatientId);
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FirstName", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             return View(booking);
         }
 

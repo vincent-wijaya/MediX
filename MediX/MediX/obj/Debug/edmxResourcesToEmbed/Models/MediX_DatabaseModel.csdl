@@ -4,11 +4,6 @@
     <EntitySet Name="Patients" EntityType="MediX_DatabaseModel.Patient" />
     <EntitySet Name="Staffs" EntityType="MediX_DatabaseModel.Staff" />
     <EntitySet Name="MedicalCenters" EntityType="MediX_DatabaseModel.MedicalCenter" />
-    <EntitySet Name="XRayRooms" EntityType="MediX_DatabaseModel.XRayRoom" />
-    <AssociationSet Name="MedicalCenterXRayRoom" Association="MediX_DatabaseModel.MedicalCenterXRayRoom">
-      <End Role="MedicalCenter" EntitySet="MedicalCenters" />
-      <End Role="XRayRoom" EntitySet="XRayRooms" />
-    </AssociationSet>
     <AssociationSet Name="MedicalCenterStaff" Association="MediX_DatabaseModel.MedicalCenterStaff">
       <End Role="MedicalCenter" EntitySet="MedicalCenters" />
       <End Role="Staff" EntitySet="Staffs" />
@@ -27,10 +22,6 @@
       <End Role="Staff" EntitySet="Staffs" />
       <End Role="Booking" EntitySet="Bookings" />
     </AssociationSet>
-    <AssociationSet Name="XRayRoomBooking" Association="MediX_DatabaseModel.XRayRoomBooking">
-      <End Role="XRayRoom" EntitySet="XRayRooms" />
-      <End Role="Booking" EntitySet="Bookings" />
-    </AssociationSet>
     <AssociationSet Name="BookingRating" Association="MediX_DatabaseModel.BookingRating">
       <End Role="Booking" EntitySet="Bookings" />
       <End Role="Rating" EntitySet="Ratings" />
@@ -38,6 +29,10 @@
     <AssociationSet Name="PatientRating" Association="MediX_DatabaseModel.PatientRating">
       <End Role="Patient" EntitySet="Patients" />
       <End Role="Rating" EntitySet="Ratings" />
+    </AssociationSet>
+    <AssociationSet Name="MedicalCenterBooking" Association="MediX_DatabaseModel.MedicalCenterBooking">
+      <End Role="MedicalCenter" EntitySet="MedicalCenters" />
+      <End Role="Booking" EntitySet="Bookings" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Patient">
@@ -88,32 +83,10 @@
     <Property Name="Latitude" Type="Double" Nullable="false" />
     <Property Name="OpenTime" Type="Time" Nullable="false" Precision="7" />
     <Property Name="CloseTime" Type="Time" Nullable="false" Precision="7" />
-    <NavigationProperty Name="XRayRooms" Relationship="MediX_DatabaseModel.MedicalCenterXRayRoom" FromRole="MedicalCenter" ToRole="XRayRoom" />
     <NavigationProperty Name="Staffs" Relationship="MediX_DatabaseModel.MedicalCenterStaff" FromRole="MedicalCenter" ToRole="Staff" />
     <NavigationProperty Name="Ratings" Relationship="MediX_DatabaseModel.MedicalCenterRating" FromRole="MedicalCenter" ToRole="Rating" />
+    <NavigationProperty Name="Bookings" Relationship="MediX_DatabaseModel.MedicalCenterBooking" FromRole="MedicalCenter" ToRole="Booking" />
   </EntityType>
-  <EntityType Name="XRayRoom">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="RoomNumber" Type="String" Nullable="false" Unicode="true" FixedLength="false" MaxLength="10" />
-    <NavigationProperty Name="MedicalCenter" Relationship="MediX_DatabaseModel.MedicalCenterXRayRoom" FromRole="XRayRoom" ToRole="MedicalCenter" />
-    <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Bookings" Relationship="MediX_DatabaseModel.XRayRoomBooking" FromRole="XRayRoom" ToRole="Booking" />
-  </EntityType>
-  <Association Name="MedicalCenterXRayRoom">
-    <End Type="MediX_DatabaseModel.MedicalCenter" Role="MedicalCenter" Multiplicity="1" />
-    <End Type="MediX_DatabaseModel.XRayRoom" Role="XRayRoom" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MedicalCenter">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="XRayRoom">
-        <PropertyRef Name="MedicalCenterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="MedicalCenterStaff">
     <End Type="MediX_DatabaseModel.MedicalCenter" Role="MedicalCenter" Multiplicity="1" />
     <End Type="MediX_DatabaseModel.Staff" Role="Staff" Multiplicity="*" />
@@ -164,9 +137,10 @@
     <Property Name="PatientId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="BookerStaff" Relationship="MediX_DatabaseModel.StaffBooking" FromRole="Booking" ToRole="Staff" />
     <Property Name="StaffId" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="XRayRoom" Relationship="MediX_DatabaseModel.XRayRoomBooking" FromRole="Booking" ToRole="XRayRoom" />
     <Property Name="XRayRoomId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Rating" Relationship="MediX_DatabaseModel.BookingRating" FromRole="Booking" ToRole="Rating" />
+    <NavigationProperty Name="MedicalCenter" Relationship="MediX_DatabaseModel.MedicalCenterBooking" FromRole="Booking" ToRole="MedicalCenter" />
+    <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
   </EntityType>
   <Association Name="PatientBooking">
     <End Type="MediX_DatabaseModel.Patient" Role="Patient" Multiplicity="1" />
@@ -192,18 +166,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="XRayRoomBooking">
-    <End Type="MediX_DatabaseModel.XRayRoom" Role="XRayRoom" Multiplicity="1" />
-    <End Type="MediX_DatabaseModel.Booking" Role="Booking" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="XRayRoom">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="XRayRoomId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="BookingRating">
     <End Type="MediX_DatabaseModel.Booking" Role="Booking" Multiplicity="1" />
     <End Type="MediX_DatabaseModel.Rating" Role="Rating" Multiplicity="0..1" />
@@ -217,6 +179,18 @@
       </Principal>
       <Dependent Role="Rating">
         <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicalCenterBooking">
+    <End Type="MediX_DatabaseModel.MedicalCenter" Role="MedicalCenter" Multiplicity="1" />
+    <End Type="MediX_DatabaseModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MedicalCenter">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="MedicalCenterId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

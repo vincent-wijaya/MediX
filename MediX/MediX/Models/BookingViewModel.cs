@@ -37,7 +37,6 @@ namespace MediX.Models
 
         public virtual Patient Patient { get; set; }
         public virtual Staff BookerStaff { get; set; }
-        public virtual XRayRoom XRayRoom { get; set; }
         public virtual Rating Rating { get; set; }
 
         [Required(ErrorMessage = "Email address is required.")]

@@ -43,15 +43,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="XRayRooms">
-      <EntityTypeMapping TypeName="IsTypeOf(MediX_DatabaseModel.XRayRoom)">
-        <MappingFragment StoreEntitySet="XRayRooms">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
-          <ScalarProperty Name="MedicalCenterId" ColumnName="MedicalCenterId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Ratings">
       <EntityTypeMapping TypeName="IsTypeOf(MediX_DatabaseModel.Rating)">
         <MappingFragment StoreEntitySet="Ratings">

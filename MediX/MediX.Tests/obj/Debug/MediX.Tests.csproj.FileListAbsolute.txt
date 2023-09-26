@@ -1,5 +1,4 @@
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
-C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\MediX.Tests.dll.config
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\MediX.Tests.dll
@@ -136,3 +135,17 @@ C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\De
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\SendGrid.pdb
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\SendGrid.xml
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.Owin.Security.Google.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\Microsoft.TestPlatform.AdapterUtilities.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\cs\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\de\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\es\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\fr\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\it\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\ja\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\ko\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\pl\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\pt-BR\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\ru\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\tr\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\zh-Hans\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX.Tests\bin\Debug\zh-Hant\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll

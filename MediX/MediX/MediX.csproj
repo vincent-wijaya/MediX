@@ -199,7 +199,6 @@
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
-    <Compile Include="Controllers\XRayRoomsController.cs" />
     <Compile Include="Models\BookingViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\MediX_Model.Context.cs">
@@ -230,34 +229,13 @@
     <Compile Include="Models\MedicalCenter.cs">
       <DependentUpon>MediX_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\MediX_DatabaseModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MediX_DatabaseModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MediX_DatabaseModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MediX_DatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MediX_DatabaseModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MediX_DatabaseModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\Patient.cs">
       <DependentUpon>MediX_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Rating.cs">
       <DependentUpon>MediX_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>MediX_DatabaseModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Staff.cs">
-      <DependentUpon>MediX_Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\XRayRoom.cs">
       <DependentUpon>MediX_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -457,24 +435,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\MediX_DatabaseModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MediX_DatabaseModel.Context.cs</LastGenOutput>
-      <DependentUpon>MediX_DatabaseModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Models\MediX_DatabaseModel.edmx.sql" />
-    <Content Include="Models\MediX_DatabaseModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MediX_DatabaseModel.cs</LastGenOutput>
-      <DependentUpon>MediX_DatabaseModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\MediX_DatabaseModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MediX_DatabaseModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\MediX_DatabaseModel.edmx.diagram">
-      <DependentUpon>MediX_DatabaseModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Models\MediX_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MediX_Model.edmx</DependentUpon>
@@ -678,11 +639,6 @@
     <Content Include="Views\Staffs\Details.cshtml" />
     <Content Include="Views\Staffs\Edit.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
-    <Content Include="Views\XRayRooms\Create.cshtml" />
-    <Content Include="Views\XRayRooms\Delete.cshtml" />
-    <Content Include="Views\XRayRooms\Details.cshtml" />
-    <Content Include="Views\XRayRooms\Edit.cshtml" />
-    <Content Include="Views\XRayRooms\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_StandardPartial.cshtml" />
     <Content Include="Views\Shared\_StaffPartial.cshtml" />

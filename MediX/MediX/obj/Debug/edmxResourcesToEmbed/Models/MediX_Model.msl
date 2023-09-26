@@ -11,7 +11,6 @@
           <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           <ScalarProperty Name="PatientId" ColumnName="PatientId" />
           <ScalarProperty Name="StaffId" ColumnName="StaffId" />
-          <ScalarProperty Name="XRayRoomId" ColumnName="XRayRoomId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -65,15 +64,6 @@
           <ScalarProperty Name="MedicalCenterId" ColumnName="MedicalCenterId" />
           <ScalarProperty Name="AccountId" ColumnName="AccountId" />
           <ScalarProperty Name="Email" ColumnName="Email" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="XRayRooms">
-      <EntityTypeMapping TypeName="MediX_Model.XRayRoom">
-        <MappingFragment StoreEntitySet="XRayRooms">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
-          <ScalarProperty Name="MedicalCenterId" ColumnName="MedicalCenterId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

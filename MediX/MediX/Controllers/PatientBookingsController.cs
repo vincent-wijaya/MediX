@@ -23,7 +23,7 @@ namespace MediX.Controllers
 
             IEnumerable<Booking> bookings;
             int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
-            bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom)
+            bookings = db.Bookings.Include(b => b.Patient).Include(b => b.Staff)
                 .Where(m => m.PatientId == patientId);
 
             return View(bookings.ToList());

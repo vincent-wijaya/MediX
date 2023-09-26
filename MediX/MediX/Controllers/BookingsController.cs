@@ -23,7 +23,7 @@ namespace MediX.Controllers
             if (User.IsInRole("Standard"))
             {
                 int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
-                return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff).Include(b => b.XRayRoom)
+                return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff)
                     .Where(m => m.PatientId == patientId).ToList());
             }
             return View(db.Bookings.ToList());
@@ -45,19 +45,60 @@ namespace MediX.Controllers
             return View(booking);
         }
 
-        [Authorize]
-        public JsonResult GetXRayRooms(int medicalCenterId)
-        {
-            var xRayRooms = db.XRayRooms.Where(x => x.MedicalCenterId == medicalCenterId).Select(x => new { Id = x.Id, RoomNumber = x.RoomNumber }).OrderBy(x => x.RoomNumber).ToList();
-            xRayRooms.Insert(0, new { Id = 0, RoomNumber = "Select X-Ray Room Number" });
+        //public JsonResult GetPossibleBookingTimes(int medicalCenterId)
+        //{
+        //var xRayRooms = db.XRayRooms.Where(x => x.MedicalCenterId == medicalCenterId).Select(x => new { Id = x.Id, RoomNumber = x.RoomNumber }).OrderBy(x => x.RoomNumber).ToList();
+        //xRayRooms.Insert(0, new { Id = 0, RoomNumber = "Select X-Ray Room Number" });
 
-            return Json(xRayRooms, JsonRequestBehavior.AllowGet);
+        //return Json(xRayRooms, JsonRequestBehavior.AllowGet);
+        //    }
+        //}
+
+        public JsonResult GetPossibleBookingTimes(int medicalCenterId, DateTime date)
+        {
+            var medicalCenter = db.MedicalCenters
+                                  .Where(m => m.Id == medicalCenterId)
+                                  .Select(m => new { m.OpenTime, m.CloseTime })
+                                  .FirstOrDefault();
+
+            if (medicalCenter == null)
+            {
+                return Json(new { success = false, message = "Medical center not found." });
+            }
+
+            // Generate a list of possible booking times in 30-minute increments
+            var possibleBookingTimes = GeneratePossibleBookingTimes(medicalCenter.OpenTime, medicalCenter.CloseTime);
+
+            // Fetch booked times for a session
+            var bookedTimes = FetchBookedTimes(medicalCenterId, date);
+
+            return Json(new { success = true, possibleBookingTimes, bookedTimes }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetXRayRoomBookTimes(int xRayRoomId)
+        private List<string> GeneratePossibleBookingTimes(TimeSpan openTime, TimeSpan closeTime)
         {
-            
+            List<string> possibleTimes = new List<string>();
+            TimeSpan currentTime = openTime;
+
+            while (currentTime < closeTime)
+            {
+                possibleTimes.Add(currentTime.ToString(@"hh\:mm tt"));
+                currentTime = currentTime.Add(new TimeSpan(0, 30, 0)); // Increment by 30 minutes
+            }
+
+            return possibleTimes;
         }
+
+        private List<string> FetchBookedTimes(int medicalCenterId, DateTime date)
+        {
+            var bookedTimes = db.Bookings.Where(b => b.MedicalCenterId == medicalCenterId)
+                .Where(b => b.DateTime.Date == date).Select(b => b.DateTime.TimeOfDay).ToList();
+
+            var bookedTimesStrings = bookedTimes.Select(time => time.ToString(@"hh\:mm tt")).ToList();
+
+            return bookedTimesStrings;
+        }
+
 
         // GET: Bookings/Create
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
@@ -65,7 +106,6 @@ namespace MediX.Controllers
         {
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
             ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
 
             return View();
@@ -89,7 +129,6 @@ namespace MediX.Controllers
 
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
             ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber");
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
             return View(booking);
         }
@@ -109,7 +148,6 @@ namespace MediX.Controllers
             }
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
             return View(booking);
         }
@@ -130,7 +168,6 @@ namespace MediX.Controllers
             }
             ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
-            ViewBag.XRayRoomId = new SelectList(db.XRayRooms, "Id", "RoomNumber", booking.XRayRoomId);
             ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
             return View(booking);
         }
