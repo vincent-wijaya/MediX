@@ -68,14 +68,6 @@
           <Property Name="Email" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
         </EntityType>
-        <EntityType Name="XRayRooms">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RoomNumber" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="MedicalCenterId" Type="int" Nullable="false" />
-        </EntityType>
         <Association Name="FK_BookingRating">
           <End Role="Bookings" Type="Self.Bookings" Multiplicity="1" />
           <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
@@ -108,18 +100,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Staffs">
-              <PropertyRef Name="MedicalCenterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MedicalCenterXRayRoom">
-          <End Role="MedicalCenters" Type="Self.MedicalCenters" Multiplicity="1" />
-          <End Role="XRayRooms" Type="Self.XRayRooms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedicalCenters">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="XRayRooms">
               <PropertyRef Name="MedicalCenterId" />
             </Dependent>
           </ReferentialConstraint>
@@ -160,25 +140,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_XRayRoomBooking">
-          <End Role="XRayRooms" Type="Self.XRayRooms" Multiplicity="1" />
-          <End Role="Bookings" Type="Self.Bookings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="XRayRooms">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Bookings">
-              <PropertyRef Name="XRayRoomId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MediX_ModelStoreContainer">
           <EntitySet Name="Bookings" EntityType="Self.Bookings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MedicalCenters" EntityType="Self.MedicalCenters" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patients" EntityType="Self.Patients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staffs" EntityType="Self.Staffs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="XRayRooms" EntityType="Self.XRayRooms" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BookingRating" Association="Self.FK_BookingRating">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="Ratings" EntitySet="Ratings" />
@@ -191,10 +158,6 @@
             <End Role="MedicalCenters" EntitySet="MedicalCenters" />
             <End Role="Staffs" EntitySet="Staffs" />
           </AssociationSet>
-          <AssociationSet Name="FK_MedicalCenterXRayRoom" Association="Self.FK_MedicalCenterXRayRoom">
-            <End Role="MedicalCenters" EntitySet="MedicalCenters" />
-            <End Role="XRayRooms" EntitySet="XRayRooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_PatientBooking" Association="Self.FK_PatientBooking">
             <End Role="Patients" EntitySet="Patients" />
             <End Role="Bookings" EntitySet="Bookings" />
@@ -205,10 +168,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_StaffBooking" Association="Self.FK_StaffBooking">
             <End Role="Staffs" EntitySet="Staffs" />
-            <End Role="Bookings" EntitySet="Bookings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_XRayRoomBooking" Association="Self.FK_XRayRoomBooking">
-            <End Role="XRayRooms" EntitySet="XRayRooms" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
         </EntityContainer>
@@ -228,11 +187,11 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PatientId" Type="Int32" Nullable="false" />
           <Property Name="StaffId" Type="Int32" Nullable="false" />
-          <Property Name="XRayRoomId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Ratings" Relationship="Self.FK_BookingRating" FromRole="Bookings" ToRole="Ratings" />
           <NavigationProperty Name="Patient" Relationship="Self.FK_PatientBooking" FromRole="Bookings" ToRole="Patients" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_StaffBooking" FromRole="Bookings" ToRole="Staffs" />
-          <NavigationProperty Name="XRayRoom" Relationship="Self.FK_XRayRoomBooking" FromRole="Bookings" ToRole="XRayRooms" />
+          <NavigationProperty Name="MedicalCenter" Relationship="MediX_Model.BookingMedicalCenter" FromRole="Booking" ToRole="MedicalCenter" />
+          <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MedicalCenter">
           <Key>
@@ -241,13 +200,13 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Longitude" Type="Double" Nullable="false" />
-          <Property Name="Latitude" Type="Double" Nullable="false" />
+          <Property Name="Longitude" Nullable="false" Type="Double" />
+          <Property Name="Latitude" Nullable="false" Type="Double" />
           <Property Name="OpenTime" Type="Time" Nullable="false" Precision="7" />
           <Property Name="CloseTime" Type="Time" Nullable="false" Precision="7" />
           <NavigationProperty Name="Ratings" Relationship="Self.FK_MedicalCenterRating" FromRole="MedicalCenters" ToRole="Ratings" />
           <NavigationProperty Name="Staffs" Relationship="Self.FK_MedicalCenterStaff" FromRole="MedicalCenters" ToRole="Staffs" />
-          <NavigationProperty Name="XRayRooms" Relationship="Self.FK_MedicalCenterXRayRoom" FromRole="MedicalCenters" ToRole="XRayRooms" />
+          <NavigationProperty Name="Bookings" Relationship="MediX_Model.BookingMedicalCenter" FromRole="MedicalCenter" ToRole="Booking" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -257,10 +216,10 @@
           <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="true" />
           <Property Name="AccountId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="true" />
           <NavigationProperty Name="Bookings" Relationship="Self.FK_PatientBooking" FromRole="Patients" ToRole="Bookings" />
           <NavigationProperty Name="Ratings" Relationship="Self.FK_PatientRating" FromRole="Patients" ToRole="Ratings" />
         </EntityType>
@@ -283,25 +242,15 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="true" />
           <Property Name="LastName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="true" />
           <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
           <Property Name="AccountId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Bookings" Relationship="Self.FK_StaffBooking" FromRole="Staffs" ToRole="Bookings" />
           <NavigationProperty Name="MedicalCenter" Relationship="Self.FK_MedicalCenterStaff" FromRole="Staffs" ToRole="MedicalCenters" />
-        </EntityType>
-        <EntityType Name="XRayRoom">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoomNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Bookings" Relationship="Self.FK_XRayRoomBooking" FromRole="XRayRooms" ToRole="Bookings" />
-          <NavigationProperty Name="MedicalCenter" Relationship="Self.FK_MedicalCenterXRayRoom" FromRole="XRayRooms" ToRole="MedicalCenters" />
         </EntityType>
         <Association Name="FK_BookingRating">
           <End Role="Bookings" Type="Self.Booking" Multiplicity="1" />
@@ -339,18 +288,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_XRayRoomBooking">
-          <End Role="XRayRooms" Type="Self.XRayRoom" Multiplicity="1" />
-          <End Role="Bookings" Type="Self.Booking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="XRayRooms">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Bookings">
-              <PropertyRef Name="XRayRoomId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MedicalCenterRating">
           <End Role="MedicalCenters" Type="Self.MedicalCenter" Multiplicity="1" />
           <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
@@ -375,18 +312,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MedicalCenterXRayRoom">
-          <End Role="MedicalCenters" Type="Self.MedicalCenter" Multiplicity="1" />
-          <End Role="XRayRooms" Type="Self.XRayRoom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MedicalCenters">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="XRayRooms">
-              <PropertyRef Name="MedicalCenterId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PatientRating">
           <End Role="Patients" Type="Self.Patient" Multiplicity="1" />
           <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
@@ -405,7 +330,6 @@
           <EntitySet Name="Patients" EntityType="Self.Patient" />
           <EntitySet Name="Ratings" EntityType="Self.Rating" />
           <EntitySet Name="Staffs" EntityType="Self.Staff" />
-          <EntitySet Name="XRayRooms" EntityType="Self.XRayRoom" />
           <AssociationSet Name="FK_BookingRating" Association="Self.FK_BookingRating">
             <End Role="Bookings" EntitySet="Bookings" />
             <End Role="Ratings" EntitySet="Ratings" />
@@ -418,10 +342,6 @@
             <End Role="Staffs" EntitySet="Staffs" />
             <End Role="Bookings" EntitySet="Bookings" />
           </AssociationSet>
-          <AssociationSet Name="FK_XRayRoomBooking" Association="Self.FK_XRayRoomBooking">
-            <End Role="XRayRooms" EntitySet="XRayRooms" />
-            <End Role="Bookings" EntitySet="Bookings" />
-          </AssociationSet>
           <AssociationSet Name="FK_MedicalCenterRating" Association="Self.FK_MedicalCenterRating">
             <End Role="MedicalCenters" EntitySet="MedicalCenters" />
             <End Role="Ratings" EntitySet="Ratings" />
@@ -430,15 +350,27 @@
             <End Role="MedicalCenters" EntitySet="MedicalCenters" />
             <End Role="Staffs" EntitySet="Staffs" />
           </AssociationSet>
-          <AssociationSet Name="FK_MedicalCenterXRayRoom" Association="Self.FK_MedicalCenterXRayRoom">
-            <End Role="MedicalCenters" EntitySet="MedicalCenters" />
-            <End Role="XRayRooms" EntitySet="XRayRooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_PatientRating" Association="Self.FK_PatientRating">
             <End Role="Patients" EntitySet="Patients" />
             <End Role="Ratings" EntitySet="Ratings" />
           </AssociationSet>
+          <AssociationSet Name="BookingMedicalCenter" Association="MediX_Model.BookingMedicalCenter">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="MedicalCenter" EntitySet="MedicalCenters" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="BookingMedicalCenter">
+          <End Type="MediX_Model.Booking" Role="Booking" Multiplicity="*" />
+          <End Type="MediX_Model.MedicalCenter" Role="MedicalCenter" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="MedicalCenter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="MedicalCenterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -455,7 +387,6 @@
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="PatientId" ColumnName="PatientId" />
                 <ScalarProperty Name="StaffId" ColumnName="StaffId" />
-                <ScalarProperty Name="XRayRoomId" ColumnName="XRayRoomId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -509,15 +440,6 @@
                 <ScalarProperty Name="MedicalCenterId" ColumnName="MedicalCenterId" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="XRayRooms">
-            <EntityTypeMapping TypeName="MediX_Model.XRayRoom">
-              <MappingFragment StoreEntitySet="XRayRooms">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="RoomNumber" ColumnName="RoomNumber" />
-                <ScalarProperty Name="MedicalCenterId" ColumnName="MedicalCenterId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

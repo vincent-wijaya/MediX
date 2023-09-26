@@ -30,6 +30,5 @@ namespace MediX.Models
         public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
-        public virtual DbSet<XRayRoom> XRayRooms { get; set; }
     }
 }

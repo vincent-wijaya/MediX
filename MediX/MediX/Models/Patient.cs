@@ -22,7 +22,7 @@ namespace MediX.Models
             this.Bookings = new HashSet<Booking>();
             this.Ratings = new HashSet<Rating>();
         }
-
+    
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -41,16 +41,14 @@ namespace MediX.Models
         [Required(ErrorMessage = "Date of birth is required.")]
         [DisplayFormat(DataFormatString = "{0:d MMMM yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime DateOfBirth { get; set; }
-        [Required(ErrorMessage = "Address is required.")]
         public string Address { get; set; }
         public string AccountId { get; set; }
         [DisplayName("Email Address")]
         [Required(ErrorMessage = "Email address is required.")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Phone number is required.")]
         [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

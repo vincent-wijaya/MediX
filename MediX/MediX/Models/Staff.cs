@@ -21,7 +21,7 @@ namespace MediX.Models
         {
             this.Bookings = new HashSet<Booking>();
         }
-
+    
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -41,16 +41,14 @@ namespace MediX.Models
         [DisplayFormat(DataFormatString = "{0:d MMMM yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
-        [Required(ErrorMessage = "Medical center this staff member works at is required.")]
         public int MedicalCenterId { get; set; }
         public string AccountId { get; set; }
         [DisplayName("Email Address")]
         [Required(ErrorMessage = "Email address is required.")]
         public string Email { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
-        [DisplayName("Medical Center")]
         public virtual MedicalCenter MedicalCenter { get; set; }
     }
 }

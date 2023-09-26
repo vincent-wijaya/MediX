@@ -10,15 +10,13 @@
         <EntityTypeShape EntityType="MediX_Model.Patient" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MediX_Model.Rating" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MediX_Model.Staff" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MediX_Model.XRayRoom" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
         <AssociationConnector Association="MediX_Model.FK_BookingRating" ManuallyRouted="false" />
         <AssociationConnector Association="MediX_Model.FK_PatientBooking" ManuallyRouted="false" />
         <AssociationConnector Association="MediX_Model.FK_StaffBooking" ManuallyRouted="false" />
-        <AssociationConnector Association="MediX_Model.FK_XRayRoomBooking" ManuallyRouted="false" />
         <AssociationConnector Association="MediX_Model.FK_MedicalCenterRating" ManuallyRouted="false" />
         <AssociationConnector Association="MediX_Model.FK_MedicalCenterStaff" ManuallyRouted="false" />
-        <AssociationConnector Association="MediX_Model.FK_MedicalCenterXRayRoom" ManuallyRouted="false" />
         <AssociationConnector Association="MediX_Model.FK_PatientRating" ManuallyRouted="false" />
+        <AssociationConnector Association="MediX_Model.BookingMedicalCenter" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

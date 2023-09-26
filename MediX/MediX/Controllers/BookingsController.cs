@@ -54,6 +54,11 @@ namespace MediX.Controllers
             return Json(xRayRooms, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetXRayRoomBookTimes(int xRayRoomId)
+        {
+            
+        }
+
         // GET: Bookings/Create
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         public ActionResult Create()

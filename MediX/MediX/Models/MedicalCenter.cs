@@ -13,7 +13,6 @@ namespace MediX.Models
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    [DisplayName("Medical Center")]
     public partial class MedicalCenter
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,9 +20,9 @@ namespace MediX.Models
         {
             this.Ratings = new HashSet<Rating>();
             this.Staffs = new HashSet<Staff>();
-            this.XRayRooms = new HashSet<XRayRoom>();
+            this.Bookings = new HashSet<Booking>();
         }
-
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -33,13 +32,12 @@ namespace MediX.Models
         public System.TimeSpan OpenTime { get; set; }
         [DisplayName("Close Time")]
         public System.TimeSpan CloseTime { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Staff> Staffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [DisplayName("X-Ray Rooms")]
-        public virtual ICollection<XRayRoom> XRayRooms { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
 }
