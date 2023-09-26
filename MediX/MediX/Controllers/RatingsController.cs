@@ -12,7 +12,7 @@ namespace MediX.Controllers
 {
     public class RatingsController : Controller
     {
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
         // GET: Ratings
         public ActionResult Index()

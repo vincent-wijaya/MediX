@@ -14,8 +14,6 @@
     <NavigationProperty Name="Ratings" Relationship="Self.FK_BookingRating" FromRole="Bookings" ToRole="Ratings" />
     <NavigationProperty Name="Patient" Relationship="Self.FK_PatientBooking" FromRole="Bookings" ToRole="Patients" />
     <NavigationProperty Name="Staff" Relationship="Self.FK_StaffBooking" FromRole="Bookings" ToRole="Staffs" />
-    <NavigationProperty Name="MedicalCenter" Relationship="MediX_Model.BookingMedicalCenter" FromRole="Booking" ToRole="MedicalCenter" />
-    <Property Name="MedicalCenterId" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="MedicalCenter">
     <Key>
@@ -30,7 +28,6 @@
     <Property Name="CloseTime" Type="Time" Nullable="false" Precision="7" />
     <NavigationProperty Name="Ratings" Relationship="Self.FK_MedicalCenterRating" FromRole="MedicalCenters" ToRole="Ratings" />
     <NavigationProperty Name="Staffs" Relationship="Self.FK_MedicalCenterStaff" FromRole="MedicalCenters" ToRole="Staffs" />
-    <NavigationProperty Name="Bookings" Relationship="MediX_Model.BookingMedicalCenter" FromRole="MedicalCenter" ToRole="Booking" />
   </EntityType>
   <EntityType Name="Patient">
     <Key>
@@ -178,21 +175,5 @@
       <End Role="Patients" EntitySet="Patients" />
       <End Role="Ratings" EntitySet="Ratings" />
     </AssociationSet>
-    <AssociationSet Name="BookingMedicalCenter" Association="MediX_Model.BookingMedicalCenter">
-      <End Role="Booking" EntitySet="Bookings" />
-      <End Role="MedicalCenter" EntitySet="MedicalCenters" />
-    </AssociationSet>
   </EntityContainer>
-  <Association Name="BookingMedicalCenter">
-    <End Type="MediX_Model.Booking" Role="Booking" Multiplicity="*" />
-    <End Type="MediX_Model.MedicalCenter" Role="MedicalCenter" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="MedicalCenter">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Booking">
-        <PropertyRef Name="MedicalCenterId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

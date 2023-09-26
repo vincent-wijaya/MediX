@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ebbce1ec32394fb5b90e5fa3823c8735" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.Booking" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.MedicalCenter" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Patient" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Rating" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Staff" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK_BookingMedicalCenter" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_BookingRating" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PatientBooking" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_StaffBooking" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MedicalCenterRating" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_MedicalCenterStaff" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK_PatientRating" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

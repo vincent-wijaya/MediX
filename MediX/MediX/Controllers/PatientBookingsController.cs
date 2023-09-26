@@ -13,7 +13,7 @@ namespace MediX.Controllers
 {
     public class PatientBookingsController : Controller
     {
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
 
         // GET: Bookings

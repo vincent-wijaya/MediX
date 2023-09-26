@@ -21,7 +21,7 @@ namespace MediX.Models
         {
             this.Bookings = new HashSet<Booking>();
         }
-    
+
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
@@ -46,7 +46,7 @@ namespace MediX.Models
         [DisplayName("Email Address")]
         [Required(ErrorMessage = "Email address is required.")]
         public string Email { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
         public virtual MedicalCenter MedicalCenter { get; set; }

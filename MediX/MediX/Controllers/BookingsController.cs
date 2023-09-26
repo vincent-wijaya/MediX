@@ -13,7 +13,7 @@ namespace MediX.Controllers
 {
     public class BookingsController : Controller
     {
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
         // GET: Bookings
         [Authorize]
@@ -78,12 +78,15 @@ namespace MediX.Controllers
         private List<string> GeneratePossibleBookingTimes(TimeSpan openTime, TimeSpan closeTime)
         {
             List<string> possibleTimes = new List<string>();
-            TimeSpan currentTime = openTime;
+            DateTime currentDate = DateTime.Today;
+                
 
-            while (currentTime < closeTime)
+            DateTime currentDateTime = currentDate.Add(openTime);
+
+            while (currentDateTime.TimeOfDay < closeTime)
             {
-                possibleTimes.Add(currentTime.ToString(@"hh\:mm tt"));
-                currentTime = currentTime.Add(new TimeSpan(0, 30, 0)); // Increment by 30 minutes
+                possibleTimes.Add(currentDateTime.ToString(@"hh\:mm tt"));
+                currentDateTime = currentDateTime.AddMinutes(30); // Increment by 30 minutes
             }
 
             return possibleTimes;

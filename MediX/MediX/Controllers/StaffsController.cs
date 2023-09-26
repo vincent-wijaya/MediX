@@ -18,7 +18,7 @@ namespace MediX.Controllers
 {
     public class StaffsController : Controller
     {
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
         public ApplicationUserManager UserManager
         {

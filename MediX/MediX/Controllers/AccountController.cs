@@ -19,7 +19,7 @@ namespace MediX.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
         public AccountController()
         {

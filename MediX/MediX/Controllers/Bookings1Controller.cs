@@ -12,7 +12,7 @@ namespace MediX.Controllers
 {
     public class Bookings1Controller : Controller
     {
-        private Entities db = new Entities();
+        private MediX_Entities db = new MediX_Entities();
 
         // GET: Bookings1
         public ActionResult Index()
