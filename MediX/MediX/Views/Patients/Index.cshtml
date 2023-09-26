@@ -4,6 +4,8 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 <div class="row mb-md-3">
     <div class="col-md-6">
@@ -29,6 +31,9 @@
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Bookings)
             </th>
             <th></th>
@@ -48,7 +53,7 @@
                     @Html.DisplayFor(modelItem => index)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
                     @{
@@ -58,6 +63,9 @@
                         var yearText = age == 1 ? "year" : "years";
                     }
                     @Html.DisplayFor(modelItem => item.DateOfBirth) (@Html.DisplayFor(modelItem => age) @Html.DisplayFor(modelItem => yearText))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
                     @Html.ActionLink("Bookings", "Index", "Bookings", new { id = item.Id }, new { @class = "btn btn-primary" })

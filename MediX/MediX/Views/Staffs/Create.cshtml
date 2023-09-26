@@ -24,9 +24,20 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.MedicalCenter, "MedicalCenterId", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.Label("Account Role", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("MedicalCenterId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.DropDownList("AccountRole", new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Medical Staff", Value = "MedicalStaff" },
+                new SelectListItem { Text = "IT Technician", Value = "FacilityManager" },
+            }, "Select Account Role", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MedicalCenterId", null, "Select Medical Center" ,htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.MedicalCenterId, "", new { @class = "text-danger" })
         </div>
     </div>

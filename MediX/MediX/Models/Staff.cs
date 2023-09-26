@@ -25,6 +25,7 @@ namespace MediX.Models
         public int Id { get; set; }
         [DisplayName("First Name")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "Last name is required.")]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
         [DisplayName("Full Name")]
@@ -36,12 +37,15 @@ namespace MediX.Models
             }
         }
         [DisplayName("DOB")]
+        [Required(ErrorMessage = "Date of birth is required.")]
         [DisplayFormat(DataFormatString = "{0:d MMMM yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime DateOfBirth { get; set; }
         public string Address { get; set; }
+        [Required(ErrorMessage = "Medical center this staff member works at is required.")]
         public int MedicalCenterId { get; set; }
         public string AccountId { get; set; }
         [DisplayName("Email Address")]
+        [Required(ErrorMessage = "Email address is required.")]
         public string Email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

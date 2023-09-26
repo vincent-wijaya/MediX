@@ -11,6 +11,8 @@ using MediX.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Helpers;
+using Microsoft.Ajax.Utilities;
 
 namespace MediX.Controllers
 {
@@ -70,28 +72,32 @@ namespace MediX.Controllers
             //var result = await UserManager.CreateAsync(user, model.Password);
             //await UserManager.AddToRoleAsync(user.Id, "Standard");
 
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 string temporaryPassword = GenerateRandomPassword();
-
 
                 var user = new ApplicationUser { UserName = staff.Email, Email = staff.Email };
                 var result = await UserManager.CreateAsync(user, temporaryPassword);
 
-
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "MedicalStaff");
+                    string accountRole = Request.Form["AccountRole"];
+
+                    await UserManager.AddToRoleAsync(user.Id, accountRole);
 
                     staff.AccountId = user.Id;
 
                     db.Staffs.Add(staff);
                     db.SaveChanges();
 
-                    string medicalCenterName = db.MedicalCenters.Where(mc => mc.Id == staff.MedicalCenterId).ToList().First().Name;
                     EmailController emailController = new EmailController();
-                    emailController.SendLoginDetails(staff.Email, staff.FullName, medicalCenterName, temporaryPassword);
+                    emailController.SendLoginDetails(staff.Email, staff.FullName, temporaryPassword);
+
                     return RedirectToAction("Index");
+                }
+                else
+                {
+                    result.Errors.ForEach(error => ModelState.AddModelError("", error.ToString()));
                 }
             }
 
@@ -164,12 +170,31 @@ namespace MediX.Controllers
 
         public string GenerateRandomPassword()
         {
-            Random random = new Random();
-            int length = 10;
+            const string uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            const string numericChars = "0123456789";
+            const string specialChars = "~`!@#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
 
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/";
-            return new string(Enumerable.Repeat(chars, length)
+            Random random = new Random();
+
+            // Ensure at least one character from each category
+            string password =
+                $"{uppercaseChars[random.Next(uppercaseChars.Length)]}" +
+                $"{lowercaseChars[random.Next(lowercaseChars.Length)]}" +
+                $"{numericChars[random.Next(numericChars.Length)]}" +
+                $"{specialChars[random.Next(specialChars.Length)]}";
+
+            // Generate remaining characters
+            int remainingLength = 10 - password.Length; // Adjust the length as needed
+            const string allChars = uppercaseChars + lowercaseChars + numericChars + specialChars;
+
+            password += new string(Enumerable.Repeat(allChars, remainingLength)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            // Shuffle the characters in the password
+            password = new string(password.ToCharArray().OrderBy(c => random.Next()).ToArray());
+
+            return password;
         }
 
         protected override void Dispose(bool disposing)
