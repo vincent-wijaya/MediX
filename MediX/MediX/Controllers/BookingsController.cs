@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -78,15 +79,12 @@ namespace MediX.Controllers
         private List<string> GeneratePossibleBookingTimes(TimeSpan openTime, TimeSpan closeTime)
         {
             List<string> possibleTimes = new List<string>();
-            DateTime currentDate = DateTime.Today;
-                
+            TimeSpan currentTime = openTime;
 
-            DateTime currentDateTime = currentDate.Add(openTime);
-
-            while (currentDateTime.TimeOfDay < closeTime)
+            while (currentTime <= closeTime)
             {
-                possibleTimes.Add(currentDateTime.ToString(@"hh\:mm tt"));
-                currentDateTime = currentDateTime.AddMinutes(30); // Increment by 30 minutes
+                possibleTimes.Add(currentTime.ToString(@"hh\:mm"));
+                currentTime += TimeSpan.FromMinutes(30); // Increment by 30 minutes
             }
 
             return possibleTimes;
@@ -94,12 +92,12 @@ namespace MediX.Controllers
 
         private List<string> FetchBookedTimes(int medicalCenterId, DateTime date)
         {
-            var bookedTimes = db.Bookings.Where(b => b.MedicalCenterId == medicalCenterId)
-                .Where(b => b.DateTime.Date == date).Select(b => b.DateTime.TimeOfDay).ToList();
+            var bookedTimes = db.Bookings.Where(b => b.MedicalCenterId == medicalCenterId && DbFunctions.TruncateTime(b.DateTime) == date.Date).Select(b => b.DateTime).ToList();
 
-            var bookedTimesStrings = bookedTimes.Select(time => time.ToString(@"hh\:mm tt")).ToList();
-
+            var bookedTimesStrings = bookedTimes.Select(time => time.ToString(@"HH\:mm")).ToList();
+            
             return bookedTimesStrings;
+            //return new List<string> { "10:00" };
         }
 
 
@@ -107,12 +105,43 @@ namespace MediX.Controllers
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         public ActionResult Create()
         {
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "FullName");
-            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
+            var patients = db.Patients.ToList();
+            var patientsWithEmail = patients.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FullName + " (" + p.Email + ")"
+            }).ToList();
+
+            ViewBag.PatientId = new SelectList(patientsWithEmail, "Value", "Text");
+            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters.OrderBy(mc => mc.Name), "Id", "Name");
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
+
+            //List<SelectListItem> medicalCenterList = GetMedicalCenters();
 
             return View();
         }
+
+        //public ActionResult GetMedicalCenterList(string q)
+        //{
+        //    var list = new List<MedicalCenter>();
+        //    if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
+        //    {
+        //        list = db.MedicalCenters.Where(mc => mc.Name.ToLower().Contains(q.ToLower())).ToList();
+        //    }
+        //    return Json(new { items = list }, JsonRequestBehavior.AllowGet);
+        //}
+
+        //private List<SelectListItem> GetMedicalCenters()
+        //{
+        //    List<SelectListItem> medicalCenterList = (from mc in db.MedicalCenters.AsEnumerable()
+        //                                              select new SelectListItem
+        //                                              {
+        //                                                  Text = mc.Name,
+        //                                                  Value = mc.Id.ToString()
+        //                                              }).ToList();
+
+        //    return medicalCenterList; 
+        //}
 
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -120,9 +149,11 @@ namespace MediX.Controllers
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,Notes,IsCompleted,DateCreated,PatientId,XRayRoomId")] Booking booking)
+        public ActionResult Create([Bind(Include = "DateTime,Notes,PatientId,MedicalCenterId")] Booking booking)
         {
-            booking.StaffId = db.Staffs.Where(s => s.AccountId == User.Identity.GetUserId()).First().Id;
+            var staffId = User.Identity.GetUserId();
+            booking.StaffId = db.Staffs.Where(s => s.AccountId == staffId ).First().Id;
+            booking.IsCompleted = false;
             if (ModelState.IsValid)
             {
                 db.Bookings.Add(booking);

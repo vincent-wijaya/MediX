@@ -18,34 +18,32 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-6">
+                @Html.Label("Patient", htmlAttributes: new { @class = "col-md-2 control-label" })
                 <div class="form-group">
-                    @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", onchange = "populateBookingTimes()" })
+                    @Html.DropDownList("PatientId", null, "Select Patient", htmlAttributes: new { @class = "form-control", @id = "patientDropdown" })
+                    @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
+                <div class="form-group">
+                    @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", @id = "medicalCenterDropdown" })
                 </div>
 
 
                 <div class="form-group">
                     @Html.Label("Date", new { @class = "col-md-2 col-form-label" })
-                    @Html.TextBox("Date", null, new { type = "date", @class = "form-control", placeholder = "Select a date", min = DateTime.Now.ToString("yyyy-MM-dd"), id = "bookingDate" })
+                    @Html.TextBox("Date", null, new { type = "date", @class = "form-control", min = DateTime.Now.ToString("yyyy-MM-dd"), @id = "bookingDate" })
                 </div>
 
                 <div class="form-group">
                     @Html.Label("Time", new { @class = "col-md-2 col-form-label" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("Time", new SelectList(new List<string>(), "Value", "Text"), "Select a time", new { @class = "form-control", id = "timeDropdown" })
-                        @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
-                    </div>
+                    @Html.DropDownList("Time", new SelectList(new List<string>(), "Value", "Text"), "Select a time", new { @class = "form-control", @id = "timeDropdown" })
+                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group" style="display:none;">
-                    @Html.TextBoxFor(m => m.DateTime, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", id = "DateTime" })
-                    @Html.ValidationMessageFor(m => m.DateTime, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="form-group">
-                    @Html.Label("Patient", htmlAttributes: new { @class = "control-label" })
-                    @Html.DropDownList("PatientId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(model => model.DateTime, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", id = "DateTime" })
+                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
                 </div>
 
             </div>
@@ -53,7 +51,7 @@
             <div class="col-md-6">
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label" })
+                    @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "col-md-2 control-label" })
                     @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", rows = "5" })
                     @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
                 </div>
@@ -75,27 +73,52 @@
             </tr>
         </table>
     </div>
+    <div class="mt-3">
+
+        <div class="form-group">
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
 }
 
 
 
-<div class="mt-3">
-
-    <div class="form-group">
-        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
-        <input type="submit" value="Create" class="btn btn-primary" />
-    </div>
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
+
     @*@Scripts.Render("~/bundles/fullcalendar")*@
     <script>
+        //$(document).ready(function () {
+        //    console.log("Fetching medical centers")
+        //    $('#medicalCenterDropdown').select2({
+        //        ajax: {
+        //            url: '/Bookings/GetMedicalCenterList',
+        //            width: 'json',
+        //            delay: 250,
+        //            data: function (params) {
+        //                return {
+        //                    q: params.term
+        //                };
+        //            },
+        //            processResults: function (data) {
+        //                console.log(data);
+        //                return {
+        //                    results: data.items
+        //                };
+        //            },
+        //            width: 'resolve'
+        //        }
+        //    });
+        //})
         function populateBookingTimes() {
-            var medicalCenterId = $('#MedicalCenterId').val();
+            var medicalCenterId = $('#medicalCenterDropdown').val();
             var bookingDate = $('#bookingDate').val();
-            if (medicalCenterId) {
+            console.log(medicalCenterId);
+            console.log(bookingDate);
+            if (medicalCenterId && bookingDate) {
                 $.ajax({
                     url: '/Bookings/GetPossibleBookingTimes',
                     type: 'GET',
@@ -103,13 +126,25 @@
                     success: function (data) {
                         var timeDropdown = $('#timeDropdown');
                         timeDropdown.empty();
+
                         $.each(data.possibleBookingTimes, function (index, time) {
-                            var option = $('<option></option>').attr('value, time').text(time);
+                            var option = $('<option>').val(time).text(time);
                             if (data.bookedTimes.includes(time)) {
                                 option.prop('disabled', true);
                             }
                             timeDropdown.append(option);
                         });
+                        //var defaultOption = $('<option disabled selected value="">Select time</option>');
+                        //timeDropdown.append(defaultOption);
+                        //$.each(data.possibleBookingTimes, function (index, time) {
+                        //    var option = $('<option></option>').val(time).text(time);
+                        //    if (data.bookedTimes.includes(time)) {
+                        //        option.prop('disabled', true);
+                        //    }
+                        //    timeDropdown.append(option);
+                        //});
+
+
                     },
                     error: function (error) {
                         console.error('Error fetching possible booking times:', error);
@@ -117,6 +152,19 @@
                 });
             }
         }
+
+        // Call populateBookingTimes when MedicalCenterId or bookingDate changes
+        $('#medicalCenterDropdown, #bookingDate').change(function () {
+            populateBookingTimes();
+        });
+
+        $('#timeDropdown').change(function () {
+            var date = $('#bookingDate').val();
+            var time = $('#timeDropdown').val();
+            var combinedDateTime = `${date} ${time}`;
+            console.log(combinedDateTime);
+            $('#DateTime').val(combinedDateTime);
+        });
     </script>
 
 }
