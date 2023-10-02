@@ -26,12 +26,6 @@ namespace MediX
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/fullcalendar").Include(
-                    "~/Scripts/lib/jquery.min.js",
-                    "~/Scripts/lib/moment.min.js",
-                    "~/Scripts/fullcalendar.js",
-                    "~/Scripts/calendar.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
                     "~/Scripts/lib/jquery.min.js",
                     "~/Scripts/DataTables/jquery.dataTables.min.js",

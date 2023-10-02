@@ -18,8 +18,6 @@
         }
     </div>
 </div>
-@*<div id="calendar"></div>
-    <div style="display: none">*@
 <table class="table">
     <thead>
         <tr>
@@ -99,11 +97,8 @@
     </tbody>
 </table>
 
-@*</div>*@
-
 
 @section Scripts {
-    @Scripts.Render("~/bundles/fullcalendar")
     @Scripts.Render("~/bundles/datatable")
     <script>
         $(document).ready(function () {

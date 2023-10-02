@@ -8,6 +8,7 @@
 <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="~/Content/fullcalendar.min.css" rel="stylesheet" />
 
 <h2 class="mt-4">New Booking</h2>
 
@@ -59,27 +60,6 @@
         </div>
     </div>
 
-    <div id="calendar"></div>
-    <div style="display: none">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Patient)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DateTime)
-                </th>
-                <th></th>
-            </tr>
-        </table>
-    </div>
-    <div class="mt-3">
-
-        <div class="form-group">
-            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
-    </div>
 }
 
 
@@ -88,6 +68,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
+
 
     @*@Scripts.Render("~/bundles/fullcalendar")*@
     <script>
@@ -153,6 +134,9 @@
             }
         }
 
+
+    </script>
+    <script>
         // Call populateBookingTimes when MedicalCenterId or bookingDate changes
         $('#medicalCenterDropdown, #bookingDate').change(function () {
             populateBookingTimes();
@@ -166,5 +150,4 @@
             $('#DateTime').val(combinedDateTime);
         });
     </script>
-
 }
