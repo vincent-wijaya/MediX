@@ -30,14 +30,17 @@
             @if (!User.IsInRole("Standard"))
             {
                 <th>
-                    Patient Name
+                    @Html.DisplayName("Patient Name")
                 </th>
             }
             <th>
-                Medical Center
+                @Html.DisplayNameFor(model => model.MedicalCenter)
             </th>
             <th>
-                Booked by
+                @Html.DisplayNameFor(model => model.Staff)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsCompleted)
             </th>
             <th></th>
         </tr>
@@ -80,14 +83,33 @@
                     }
                 </td>
                 <td>
-                    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                    @if (item.IsCompleted)
                     {
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        <span style="color: green; font-weight: bold">Completed</span>
                     }
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
-                    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                    else
                     {
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        <span style="color: darkorange; font-weight: bold">Pending</span>
+                    }
+                </td>
+                <td align="center">
+                    @if (item.IsCompleted)
+                    {
+                        @Html.ActionLink("Rate", "Create", "Ratings", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })<*@
+                    }
+                    else
+                    {
+                        if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Complete", "Complete", new { id = item.Id }, new { @class = "btn btn-success" })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        }
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                        if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                        }
                     }
                 </td>
             </tr>

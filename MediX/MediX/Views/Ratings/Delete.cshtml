@@ -25,15 +25,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Comment)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastUpdated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastUpdated)
+            @Html.Raw(Model.Comment)
         </dd>
 
         <dt>

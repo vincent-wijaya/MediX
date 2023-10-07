@@ -12,11 +12,16 @@ namespace MediX.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public partial class Rating
     {
         public int Id { get; set; }
+        [Required]
         public short Value { get; set; }
+        [Required]
+        [AllowHtml]
         public string Comment { get; set; }
         public int MedicalCenterId { get; set; }
         public int PatientId { get; set; }

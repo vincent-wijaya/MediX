@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MediX.Models.Rating>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Ratings";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,9 +19,6 @@
             @Html.DisplayNameFor(model => model.Comment)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastUpdated)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Patient.Id)
         </th>
         <th>
@@ -35,11 +32,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.Value)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdated)
+        <td>        
+            @*@Html.DisplayFor(modelItem => item.Comment)*@
+            @Html.Raw(item.Comment)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Patient.Id)

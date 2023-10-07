@@ -41,21 +41,21 @@
                 <dd class="col-sm-9">
                     @if (!User.IsInRole("Standard"))
                     {
-                        @Html.ActionLink(Model.BookerStaff.FullName, "Details", "Staffs", new { id = Model.BookerStaff.Id }, new { @class = "btn-link" })
+                        @Html.ActionLink(Model.Staff.FullName, "Details", "Staffs", new { id = Model.Staff.Id }, new { @class = "btn-link" })
                     }
                     else
                     {
-                        @Html.DisplayFor(model => model.BookerStaff.FullName)
+                        @Html.DisplayFor(model => model.Staff.FullName)
                     }
                 </dd>
 
                 <dt class="col-sm-3">Location:</dt>
                 <dd class="col-sm-9">
-                    @Html.ActionLink(Model.XRayRoom.MedicalCenter.Name, "Details", "MedicalCenters", new { id = Model.XRayRoom.MedicalCenter.Id }, new { @class = "btn-link" }) @Html.DisplayFor(model => model.XRayRoom.RoomNumber)
+                    @Html.ActionLink(Model.MedicalCenter.Name, "Details", "MedicalCenters", new { id = Model.MedicalCenter.Id }, new { @class = "btn-link" }) @Html.DisplayFor(model => model.XRayRoom.RoomNumber)
                 </dd>
 
                 <dt class="col-sm-3">Address:</dt>
-                <dd class="col-sm-9">@Html.DisplayFor(model => model.XRayRoom.MedicalCenter.Address)</dd>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.MedicalCenter.Address)</dd>
 
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateCreated):</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.DateCreated)</dd>
@@ -65,7 +65,7 @@
                 @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
             </div>
         </div>
-    </div>
+    </div>  
     <div class="mt-3">
         <a href="javascript:history.back()" class="btn btn-outline-secondary">Back</a>
     </div>

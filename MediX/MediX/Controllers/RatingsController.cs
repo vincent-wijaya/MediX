@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MediX.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MediX.Controllers
 {
@@ -36,11 +37,25 @@ namespace MediX.Controllers
             return View(rating);
         }
 
-        // GET: Ratings/Create
-        public ActionResult Create()
+        private bool IsBookingBelongsToUser(Booking booking)
         {
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id");
-            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name");
+            string patientId = User.Identity.GetUserId();
+
+            return booking.Patient.AccountId == patientId;
+        }
+
+        // GET: Ratings/Create
+        public ActionResult Create(string BookingId)
+        {
+            Booking booking = db.Bookings.Find(BookingId);
+
+            if (booking == null || !IsBookingBelongsToUser(booking))
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.BookingId = BookingId;
+
             return View();
         }
 
@@ -49,17 +64,23 @@ namespace MediX.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Value,Comment,LastUpdated,PatientId,MedicalCenterId")] Rating rating)
+        public ActionResult Create([Bind(Include = "Value,Comment")] Rating rating, string bookingId)
         {
+            Booking booking = db.Bookings.Find(bookingId);
+
+            if (booking == null || !IsBookingBelongsToUser(booking))
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
+            rating.Booking = booking;
+
             if (ModelState.IsValid)
             {
                 db.Ratings.Add(rating);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", rating.PatientId);
-            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters, "Id", "Name", rating.MedicalCenterId);
             return View(rating);
         }
 

@@ -234,6 +234,34 @@ namespace MediX.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Bookings/Complete/5
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
+        public ActionResult Complete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Booking booking = db.Bookings.Find(id);
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
+            return View(booking);
+        }
+
+        // POST: Bookings/Complete/5
+        [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
+        [HttpPost, ActionName("Complete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CompleteConfirmed(int id)
+        {
+            Booking booking = db.Bookings.Find(id);
+            booking.IsCompleted = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

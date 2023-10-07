@@ -28,6 +28,7 @@ namespace MediX.Models
         public System.DateTime DateTime { get; set; }
         [Required(ErrorMessage = "Information regarding the X-ray imaging is required.")]
         public string Notes { get; set; }
+        [DisplayName("Status")]
         public bool IsCompleted { get; set; }
         [DisplayName("Created on")]
         public System.DateTime DateCreated { get; set; } = DateTime.Now;
@@ -40,6 +41,7 @@ namespace MediX.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
         public virtual Patient Patient { get; set; }
+        [DisplayName("Booked by")]
         public virtual Staff Staff { get; set; }
         [DisplayName("Medical Center")]
         public virtual MedicalCenter MedicalCenter { get; set; }
