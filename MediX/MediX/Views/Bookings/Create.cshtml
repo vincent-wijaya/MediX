@@ -114,6 +114,7 @@
                         var timeDropdown = $('#timeDropdown');
                         timeDropdown.empty();
 
+                        timeDropdown.append($('<option>').val(null).text("Select time").prop('disabled', true).prop('selected', true));
                         $.each(data.possibleBookingTimes, function (index, time) {
                             var option = $('<option>').val(time).text(time);
                             if (data.bookedTimes.includes(time)) {
@@ -148,11 +149,11 @@
             populateBookingTimes();
         });
 
+        // Updates model.DateTime
         $('#timeDropdown').change(function () {
             var date = $('#bookingDate').val();
             var time = $('#timeDropdown').val();
             var combinedDateTime = `${date} ${time}`;
-            console.log(combinedDateTime);
             $('#DateTime').val(combinedDateTime);
         });
     </script>

@@ -93,9 +93,9 @@
                     }
                 </td>
                 <td align="center">
-                    @if (item.IsCompleted)
+                    @if (item.IsCompleted && item.Ratings.Count == 0)
                     {
-                        @Html.ActionLink("Rate", "Create", "Ratings", new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Review", "Create", "Ratings", new { bookingId = item.Id }, new { @class = "btn btn-success" })
                         @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })<*@
                     }
                     else

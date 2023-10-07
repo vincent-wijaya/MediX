@@ -8,9 +8,6 @@
 <div class="container">
     <div class="card mt-5">
         <div class="card-body">
-            <h2 class="card-title">Booking Details</h2>
-            <hr />
-
             <dl class="row">
                 @if (!User.IsInRole("Standard"))
                 {
@@ -22,7 +19,9 @@
                 <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateTime):</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.DateTime)</dd>
 
-                <dt class="col-sm-3">Status:</dt>
+                <dt class="col-sm-3">
+                    Status:
+                </dt>
                 <dd class="col-sm-9">
                     @if (Model.IsCompleted)
                     {
@@ -51,7 +50,7 @@
 
                 <dt class="col-sm-3">Location:</dt>
                 <dd class="col-sm-9">
-                    @Html.ActionLink(Model.MedicalCenter.Name, "Details", "MedicalCenters", new { id = Model.MedicalCenter.Id }, new { @class = "btn-link" }) @Html.DisplayFor(model => model.XRayRoom.RoomNumber)
+                    @Html.ActionLink(Model.MedicalCenter.Name, "Details", "MedicalCenters", new { id = Model.MedicalCenter.Id }, new { @class = "btn-link" })
                 </dd>
 
                 <dt class="col-sm-3">Address:</dt>
@@ -61,12 +60,18 @@
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.DateCreated)</dd>
             </dl>
 
-            <div class="mt-3">
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            <div class="text-center">
+                <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+                @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+                }
+
+                @if (Model.IsCompleted && Model.Ratings.Count == 0)
+                {
+                    @Html.ActionLink("Review", "Create", "Ratings", new { bookingId = Model.Id }, new { @class = "btn btn-success" })
+                }
             </div>
         </div>
     </div>  
-    <div class="mt-3">
-        <a href="javascript:history.back()" class="btn btn-outline-secondary">Back</a>
-    </div>
 </div>

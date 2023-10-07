@@ -5,77 +5,77 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Complete</h2>
+<div class="container">
+    <h2 class="text-center mt-4">Complete Booking</h2>
 
-<h3>Confirm this session has been completed??</h3>
-<div>
-    <h4>Booking</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.DateTime)
-        </dt>
+    <div class="card mt-4">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    Date and Time:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateTime)
-        </dd>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.DateTime)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
+                <dt class="col-sm-3">
+                    Notes:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Notes)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsCompleted)
-        </dt>
+                <dt class="col-sm-3">
+                    Status:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsCompleted)
-        </dd>
+                <dd class="col-sm-9">
+                    @if (Model.IsCompleted)
+                    {
+                        <span class="text-success font-weight-bold">Completed</span>
+                    }
+                    else
+                    {
+                        <span class="text-warning font-weight-bold">Pending</span>
+                    }
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
+                <dt class="col-sm-3">
+                    Patient:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Patient.FullName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PatientId)
-        </dt>
+                <dt class="col-sm-3">
+                Staff:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PatientId)
-        </dd>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Staff.FullName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.StaffId)
-        </dt>
+                <dt class="col-sm-3">
+                    Medical Center:
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.StaffId)
-        </dd>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.MedicalCenter.Name)
+                </dd>
+            </dl>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MedicalCenterId)
-        </dt>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.MedicalCenterId)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Complete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <div class="text-center">
+                    <a href="@Url.Action("Index")" class="btn btn-secondary ml-2">Back to List</a>
+                    <input type="submit" value="Complete" class="btn btn-primary" />
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>

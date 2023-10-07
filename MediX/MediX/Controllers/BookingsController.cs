@@ -21,6 +21,7 @@ namespace MediX.Controllers
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
+            User.Identity.GetUserName();
             if (User.IsInRole("Standard"))
             {
                 int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;

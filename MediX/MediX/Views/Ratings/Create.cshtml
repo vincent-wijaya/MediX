@@ -7,10 +7,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
-
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -19,13 +15,21 @@
     <h4>Rating</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Booking_Id)
+    @Html.HiddenFor(model => model.PatientId)
+    @Html.HiddenFor(model => model.MedicalCenterId)
+    @Html.HiddenFor(model => model.Value, htmlAttributes: new { @id = "Value"} )
 
-    @Html.Hidden("BookingId", ViewBag.BookingId)
 
     <div class="form-group">
         @Html.LabelFor(model => model.Value, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Value, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="btn-group btn-group-justified" asp-for="Value" role="group" aria-label="Rating value">
+                @for (int i = 1; i <= 5; i++)
+                {
+                    <button type="button" class="btn btn-outline-primary" onclick="setValue(@i)">@i</button>
+                }
+            </div>
             @Html.ValidationMessageFor(model => model.Value, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -47,15 +51,29 @@
 </div>
 }
 
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
     <script>
         tinymce.init({
             selector: '#comment'
         })
     </script>
+    <script>
+        function setValue(value) {
+            $('#Value').val(value);
+        }
+
+        $(".btn-group > .btn").click(function () {
+            $(this).addClass("active").siblings().removeClass("active");
+            $(this).addClass("active");
+        });
+    </script>
 }
+
+

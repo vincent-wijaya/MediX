@@ -45,18 +45,31 @@ namespace MediX.Controllers
         }
 
         // GET: Ratings/Create
-        public ActionResult Create(string BookingId)
+        public ActionResult Create(int? bookingId)
         {
-            Booking booking = db.Bookings.Find(BookingId);
-
-            if (booking == null || !IsBookingBelongsToUser(booking))
+            if (bookingId == null)
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            ViewBag.BookingId = BookingId;
+            Booking booking = db.Bookings.Find(bookingId);
+            if (booking == null)
+            {
+                return HttpNotFound();
+            }
 
-            return View();
+            if (!IsBookingBelongsToUser(booking))
+            {
+                return new HttpUnauthorizedResult();
+            }
+
+            Rating rating = new Rating
+            {
+                Booking_Id = booking.Id,
+                MedicalCenterId = booking.MedicalCenterId,
+                PatientId = booking.PatientId
+            };
+            return View(rating);
         }
 
         // POST: Ratings/Create
@@ -64,17 +77,8 @@ namespace MediX.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Value,Comment")] Rating rating, string bookingId)
+        public ActionResult Create([Bind(Include = "Booking_Id,Value,Comment,MedicalCenterId,PatientId")] Rating rating)
         {
-            Booking booking = db.Bookings.Find(bookingId);
-
-            if (booking == null || !IsBookingBelongsToUser(booking))
-            {
-                return Redirect(Request.UrlReferrer.ToString());
-            }
-
-            rating.Booking = booking;
-
             if (ModelState.IsValid)
             {
                 db.Ratings.Add(rating);
