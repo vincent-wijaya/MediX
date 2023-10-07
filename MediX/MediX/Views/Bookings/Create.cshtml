@@ -16,8 +16,14 @@
 {
     @Html.AntiForgeryToken()
 
+
     <div class="container mt-4">
         <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.DateTime, new { id = "DateTime" })
+            @Html.HiddenFor(model => model.StaffId)
+            @Html.HiddenFor(model => model.IsCompleted)
+
             <div class="col-md-6">
                 @Html.Label("Patient", htmlAttributes: new { @class = "col-md-2 control-label" })
                 <div class="form-group">
@@ -41,16 +47,9 @@
                     @Html.DropDownList("Time", new SelectList(new List<string>(), "Value", "Text"), "Select a time", new { @class = "form-control", @id = "timeDropdown" })
                     @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
                 </div>
-
-                <div class="form-group" style="display:none;">
-                    @Html.TextBoxFor(model => model.DateTime, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", id = "DateTime" })
-                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
-                </div>
-
             </div>
 
             <div class="col-md-6">
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "col-md-2 control-label" })
                     @Html.TextAreaFor(model => model.Notes, new { @class = "form-control", rows = "5" })
@@ -74,32 +73,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/bootstrap.min.js"></script>
-
-
-    @*@Scripts.Render("~/bundles/fullcalendar")*@
     <script>
-        //$(document).ready(function () {
-        //    console.log("Fetching medical centers")
-        //    $('#medicalCenterDropdown').select2({
-        //        ajax: {
-        //            url: '/Bookings/GetMedicalCenterList',
-        //            width: 'json',
-        //            delay: 250,
-        //            data: function (params) {
-        //                return {
-        //                    q: params.term
-        //                };
-        //            },
-        //            processResults: function (data) {
-        //                console.log(data);
-        //                return {
-        //                    results: data.items
-        //                };
-        //            },
-        //            width: 'resolve'
-        //        }
-        //    });
-        //})
         function populateBookingTimes() {
             var medicalCenterId = $('#medicalCenterDropdown').val();
             var bookingDate = $('#bookingDate').val();

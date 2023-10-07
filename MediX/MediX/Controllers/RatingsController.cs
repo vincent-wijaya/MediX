@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MediX.Models;
 using Microsoft.AspNet.Identity;
+using Ganss.Xss;    // HTML sanitizer
 
 namespace MediX.Controllers
 {
@@ -81,6 +82,10 @@ namespace MediX.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Sanitise comment
+                var sanitizer = new HtmlSanitizer();
+                rating.Comment = sanitizer.Sanitize(rating.Comment);
+
                 db.Ratings.Add(rating);
                 db.SaveChanges();
                 return RedirectToAction("Index");

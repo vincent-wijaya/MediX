@@ -71,6 +71,14 @@
                 {
                     @Html.ActionLink("Review", "Create", "Ratings", new { bookingId = Model.Id }, new { @class = "btn btn-success" })
                 }
+
+                @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                {
+                    if (!Model.IsCompleted)
+                    {
+                        @Html.ActionLink("Complete", "Complete", new { id = Model.Id }, new { @class = "btn btn-success" })
+                    }
+                }
             </div>
         </div>
     </div>  

@@ -22,6 +22,10 @@ namespace MediX.Models
         [Display(Name = "Body")]
         public string Body { get; set; }
 
+        [Display(Name = "Attachment File Name")]
+        public string AttachmentFileName { get; set; }
 
+        [Display(Name = "Attachment")]
+        public byte[] Attachment { get; set; }
     }
 }

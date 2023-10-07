@@ -22,6 +22,7 @@ namespace MediX.Models
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
         public short Value { get; set; }
         [Required]
+        [StringLength(500, ErrorMessage = "Comment must be less than 500 characters.")]
         [AllowHtml]
         public string Comment { get; set; }
         public int MedicalCenterId { get; set; }

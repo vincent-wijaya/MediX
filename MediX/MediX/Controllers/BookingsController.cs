@@ -47,15 +47,6 @@ namespace MediX.Controllers
             return View(booking);
         }
 
-        //public JsonResult GetPossibleBookingTimes(int medicalCenterId)
-        //{
-        //var xRayRooms = db.XRayRooms.Where(x => x.MedicalCenterId == medicalCenterId).Select(x => new { Id = x.Id, RoomNumber = x.RoomNumber }).OrderBy(x => x.RoomNumber).ToList();
-        //xRayRooms.Insert(0, new { Id = 0, RoomNumber = "Select X-Ray Room Number" });
-
-        //return Json(xRayRooms, JsonRequestBehavior.AllowGet);
-        //    }
-        //}
-
         public JsonResult GetPossibleBookingTimes(int medicalCenterId, DateTime date)
         {
             var medicalCenter = db.MedicalCenters
@@ -117,32 +108,16 @@ namespace MediX.Controllers
             ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters.OrderBy(mc => mc.Name), "Id", "Name");
             ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
 
-            //List<SelectListItem> medicalCenterList = GetMedicalCenters();
+            var staffAccountId = User.Identity.GetUserId();
 
-            return View();
+            Booking booking = new Booking()
+            {
+                StaffId = db.Staffs.Where(s => s.AccountId == staffAccountId).First().Id,
+                IsCompleted = false
+            };
+
+            return View(booking);
         }
-
-        //public ActionResult GetMedicalCenterList(string q)
-        //{
-        //    var list = new List<MedicalCenter>();
-        //    if (!(string.IsNullOrEmpty(q) || string.IsNullOrWhiteSpace(q)))
-        //    {
-        //        list = db.MedicalCenters.Where(mc => mc.Name.ToLower().Contains(q.ToLower())).ToList();
-        //    }
-        //    return Json(new { items = list }, JsonRequestBehavior.AllowGet);
-        //}
-
-        //private List<SelectListItem> GetMedicalCenters()
-        //{
-        //    List<SelectListItem> medicalCenterList = (from mc in db.MedicalCenters.AsEnumerable()
-        //                                              select new SelectListItem
-        //                                              {
-        //                                                  Text = mc.Name,
-        //                                                  Value = mc.Id.ToString()
-        //                                              }).ToList();
-
-        //    return medicalCenterList; 
-        //}
 
         // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -150,11 +125,8 @@ namespace MediX.Controllers
         [Authorize(Roles = "Administrator,FacilityManager,MedicalStaff")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DateTime,Notes,PatientId,MedicalCenterId")] Booking booking)
+        public ActionResult Create([Bind(Include = "DateTime,Notes,PatientId,MedicalCenterId,StaffId,IsCompleted")] Booking booking)
         {
-            var staffId = User.Identity.GetUserId();
-            booking.StaffId = db.Staffs.Where(s => s.AccountId == staffId ).First().Id;
-            booking.IsCompleted = false;
             if (ModelState.IsValid)
             {
                 db.Bookings.Add(booking);
@@ -181,9 +153,19 @@ namespace MediX.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PatientId = new SelectList(db.Patients, "Id", "Id", booking.PatientId);
-            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "Id", booking.StaffId);
+
+            var patients = db.Patients.ToList();
+            var patientsWithEmail = patients.Select(p => new SelectListItem
+            {
+                Value = p.Id.ToString(),
+                Text = p.FullName + " (" + p.Email + ")"
+            }).ToList();
+
+            ViewBag.PatientId = new SelectList(patientsWithEmail, "Value", "Text");
+            ViewBag.MedicalCenterId = new SelectList(db.MedicalCenters.OrderBy(mc => mc.Name), "Id", "Name");
+            ViewBag.StaffId = new SelectList(db.Staffs, "Id", "FullName");
             ViewBag.Id = new SelectList(db.Ratings, "Id", "Comment", booking.Id);
+
             return View(booking);
         }
 

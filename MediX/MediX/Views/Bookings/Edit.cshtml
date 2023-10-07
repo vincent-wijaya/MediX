@@ -11,66 +11,49 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Booking</h4>
+        <h4>Edit Booking</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.DateTime, new { id = "DateTime" })
+        <div class="container mt-4">
+            <div class="row">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.DateTime, new { id = "DateTime" })
+                <div class="col-md-6">
+                    @Html.Label("Patient", htmlAttributes: new { @class = "col-md-2 control-label" })
+                    <div class="form-group">
+                        @Html.DropDownList("PatientId", null, "Select Patient", htmlAttributes: new { @class = "form-control", @id = "patientDropdown" })
+                        @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @Html.Label("Medical Center", htmlAttributes: new { @class = "control-label" })
+                    <div class="form-group">
+                        @Html.DropDownList("MedicalCenterId", null, "Select Medical Center", htmlAttributes: new { @class = "form-control", @id = "medicalCenterDropdown" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsCompleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsCompleted, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IsCompleted, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.Label("Date", new { @class = "col-md-2 col-form-label" })
+                        @Html.TextBox("Date", null, new { type = "date", @class = "form-control", min = DateTime.Now.ToString("yyyy-MM-dd"), @id = "bookingDate" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.Label("Time", new { @class = "col-md-2 col-form-label" })
+                        @Html.DropDownList("Time", new SelectList(new List<string>(), "Value", "Text"), "Select a time", new { @class = "form-control", @id = "timeDropdown" })
+                        @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PatientId, "PatientId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PatientId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StaffId, "StaffId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("StaffId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.XRayRoomId, "XRayRoomId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("XRayRoomId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.XRayRoomId, "", new { @class = "text-danger" })
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "col-md-2 control-label" })
+                        @Html.EditorFor(model => model.Notes, new { @class = "form-control", rows = "5" })
+                        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -86,6 +69,66 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script>
+        function populateBookingTimes() {
+            var medicalCenterId = $('#medicalCenterDropdown').val();
+            var bookingDate = $('#bookingDate').val();
+            console.log(medicalCenterId);
+            console.log(bookingDate);
+            if (medicalCenterId && bookingDate) {
+                $.ajax({
+                    url: '/Bookings/GetPossibleBookingTimes',
+                    type: 'GET',
+                    data: { medicalCenterId: medicalCenterId, date: bookingDate },
+                    success: function (data) {
+                        var timeDropdown = $('#timeDropdown');
+                        timeDropdown.empty();
+
+                        timeDropdown.append($('<option>').val(null).text("Select time").prop('disabled', true).prop('selected', true));
+                        $.each(data.possibleBookingTimes, function (index, time) {
+                            var option = $('<option>').val(time).text(time);
+                            if (data.bookedTimes.includes(time)) {
+                                option.prop('disabled', true);
+                            }
+                            timeDropdown.append(option);
+                        });
+                        //var defaultOption = $('<option disabled selected value="">Select time</option>');
+                        //timeDropdown.append(defaultOption);
+                        //$.each(data.possibleBookingTimes, function (index, time) {
+                        //    var option = $('<option></option>').val(time).text(time);
+                        //    if (data.bookedTimes.includes(time)) {
+                        //        option.prop('disabled', true);
+                        //    }
+                        //    timeDropdown.append(option);
+                        //});
+
+
+                    },
+                    error: function (error) {
+                        console.error('Error fetching possible booking times:', error);
+                    }
+                });
+            }
+        }
+
+
+    </script>
+    <script>
+        // Call populateBookingTimes when MedicalCenterId or bookingDate changes
+        $('#medicalCenterDropdown, #bookingDate').change(function () {
+            populateBookingTimes();
+        });
+
+        // Updates model.DateTime
+        $('#timeDropdown').change(function () {
+            var date = $('#bookingDate').val();
+            var time = $('#timeDropdown').val();
+            var combinedDateTime = `${date} ${time}`;
+            $('#DateTime').val(combinedDateTime);
+        });
+    </script>
 }

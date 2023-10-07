@@ -96,19 +96,27 @@
                     @if (item.IsCompleted && item.Ratings.Count == 0)
                     {
                         @Html.ActionLink("Review", "Create", "Ratings", new { bookingId = item.Id }, new { @class = "btn btn-success" })
-                        @*@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })<*@
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
                     }
                     else
                     {
                         if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
                         {
-                            @Html.ActionLink("Complete", "Complete", new { id = item.Id }, new { @class = "btn btn-success" })
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
-                        }
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
-                        if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
-                        {
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                            if (!item.IsCompleted)
+                            {
+                                @Html.ActionLink("Complete", "Complete", new { id = item.Id }, new { @class = "btn btn-success" })
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                                if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+                                {
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                                }
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
+                            }
+
                         }
                     }
                 </td>
