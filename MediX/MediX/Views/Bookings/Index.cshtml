@@ -37,9 +37,6 @@
                 @Html.DisplayNameFor(model => model.MedicalCenter)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Staff)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.IsCompleted)
             </th>
             <th></th>
@@ -68,19 +65,6 @@
                 }
                 <td>
                     @Html.ActionLink(item.MedicalCenter.Name, "Details", "MedicalCenters", new { id = item.MedicalCenter.Id }, null)
-                </td>
-                <td>
-                    @{
-                        var staffFullName = item.Staff.FirstName + " " + item.Staff.LastName;
-                    }
-                    @if (!User.IsInRole("Standard"))
-                    {
-                        @Html.ActionLink(staffFullName, "Details", "Staffs", new { id = item.Staff.Id }, null)
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => staffFullName)
-                    }
                 </td>
                 <td>
                     @if (item.IsCompleted)

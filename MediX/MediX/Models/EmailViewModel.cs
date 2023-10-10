@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace MediX.Models
@@ -22,10 +23,12 @@ namespace MediX.Models
         [Display(Name = "Body")]
         public string Body { get; set; }
 
+        public HttpPostedFileBase Attachment { get; set; }
+
         [Display(Name = "Attachment File Name")]
-        public string AttachmentFileName { get; set; }
+        public string FilePath { get; set; }
 
         [Display(Name = "Attachment")]
-        public byte[] Attachment { get; set; }
+        public string FileName { get; set; }
     }
 }
