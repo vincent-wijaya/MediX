@@ -29,7 +29,7 @@ namespace MediX
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
                     "~/Scripts/lib/jquery.min.js",
                     "~/Scripts/DataTables/jquery.dataTables.min.js",
-                    "~/Scripts/DataTables/dataTables.bootstrap.min.js"
+                    "~/Scripts/DataTables/dataTables.bootstrap4.min.js"
                 ));
         }
     }

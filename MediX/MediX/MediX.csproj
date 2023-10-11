@@ -229,6 +229,7 @@
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Models\BookingViewModel.cs" />
+    <Compile Include="Models\MedicalCenterViewModel.cs" />
     <Compile Include="Models\EmailViewModel.cs" />
     <Compile Include="Models\MediX_Database_Model.Context.cs">
       <AutoGen>True</AutoGen>

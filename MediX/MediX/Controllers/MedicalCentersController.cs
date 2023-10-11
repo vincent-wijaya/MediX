@@ -17,7 +17,26 @@ namespace MediX.Controllers
         // GET: MedicalCenters
         public ActionResult Index()
         {
-            return View(db.MedicalCenters.ToList());
+            var medicalCenters = db.MedicalCenters.ToList();
+
+            var medicalCenterViewModels = new List<MedicalCenterViewModel>();
+
+            foreach (var medicalCenter in medicalCenters)
+            {
+                var averageRating = CalculateAverageRating(medicalCenter.Id);
+                var count = CountRatings(medicalCenter.Id);
+
+                var viewModel = new MedicalCenterViewModel
+                {
+                    MedicalCenter = medicalCenter,
+                    AverageRating = averageRating,
+                    RatingsCount = count
+                };
+
+                medicalCenterViewModels.Add(viewModel);
+            }
+
+            return View(medicalCenterViewModels);
         }
 
         // GET: MedicalCenters/Details/5
@@ -36,6 +55,7 @@ namespace MediX.Controllers
         }
 
         // GET: MedicalCenters/Create
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +66,8 @@ namespace MediX.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create([Bind(Include = "Id,Name,Address,Longitude,Latitude,OpenTime,CloseTime")] MedicalCenter medicalCenter)
         {
             if (ModelState.IsValid)
@@ -59,6 +81,7 @@ namespace MediX.Controllers
         }
 
         // GET: MedicalCenters/Edit/5
+        [Authorize(Roles = "Administrator,FacilityManager")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -113,6 +136,28 @@ namespace MediX.Controllers
             db.MedicalCenters.Remove(medicalCenter);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public int CountRatings(int medicalCenterId)
+        {
+            return db.Ratings.Where(r => r.MedicalCenterId == medicalCenterId).Count();
+        }
+
+        // Calculates average rating value of medical center
+        public double CalculateAverageRating(int medicalCenterId)
+        {
+            var ratingsForMedicalCenter = db.Ratings
+                .Where(r => r.MedicalCenterId == medicalCenterId)
+                .Select(r =>(double) r.Value);
+
+            if (ratingsForMedicalCenter.Any())
+            {
+                return Math.Round(ratingsForMedicalCenter.Average(), 1);
+            }
+            else
+            {
+                return -1; // default value for no raints
+            }
         }
 
         protected override void Dispose(bool disposing)

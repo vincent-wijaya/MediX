@@ -18,7 +18,7 @@
         }
     </div>
 </div>
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>
@@ -96,11 +96,11 @@
                                     @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
                                 }
                             }
-                            else
-                            {
-                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
-                            }
 
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", style = "color: white;" })
                         }
                     }
                 </td>
