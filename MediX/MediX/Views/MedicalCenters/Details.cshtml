@@ -1,38 +1,46 @@
-﻿@model MediX.Models.MedicalCenter
+﻿@model MediX.Models.MedicalCenterViewModel
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>
+    @Html.DisplayFor(model => model.MedicalCenter.Name)
+</h2>
 
 <div>
-    <h4>MedicalCenter</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.MedicalCenter.Address)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.MedicalCenter.Address)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.AverageRating)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address)
+            @if (Model.AverageRating != -1)
+            {
+                @Html.DisplayFor(model => model.AverageRating)
+            }
+            else
+            {
+                <span>-</span>
+            }
+            (@Html.DisplayFor(model => model.RatingsCount))
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OpenTime)
+            @Html.DisplayNameFor(model => model.MedicalCenter.OpenTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.OpenTime) - @Html.DisplayFor(model => model.CloseTime)
+            @Html.DisplayFor(model => model.MedicalCenter.OpenTime) - @Html.DisplayFor(model => model.MedicalCenter.CloseTime)
         </dd>
 
         <dd>
@@ -41,6 +49,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
+    { 
+        @Html.ActionLink("Edit", "Edit", new { id = Model.MedicalCenter.Id }, new { @class = "btn btn-primary" })
+    }
     <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
 </p>

@@ -51,7 +51,19 @@ namespace MediX.Controllers
             {
                 return HttpNotFound();
             }
-            return View(medicalCenter);
+
+
+            var averageRating = CalculateAverageRating(medicalCenter.Id);
+            var count = CountRatings(medicalCenter.Id);
+
+            var viewModel = new MedicalCenterViewModel
+            {
+                MedicalCenter = medicalCenter,
+                AverageRating = averageRating,
+                RatingsCount = count
+            };
+
+            return View(viewModel);
         }
 
         // GET: MedicalCenters/Create

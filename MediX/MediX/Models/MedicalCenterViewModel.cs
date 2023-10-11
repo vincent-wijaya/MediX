@@ -12,11 +12,11 @@ namespace MediX.Models
     public class MedicalCenterViewModel
     {
         [DisplayName("Rating")]
-        public double AverageRating {  get; set; }
+        public double AverageRating { get; set; }
 
         public int RatingsCount { get; set; }
 
         [DisplayName("Medical Center")]
-        public virtual MedicalCenter MedicalCenter { get; set; }
+        public MedicalCenter MedicalCenter { get; set; }
     }
 }

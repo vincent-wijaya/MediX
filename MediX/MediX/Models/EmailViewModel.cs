@@ -13,8 +13,8 @@ namespace MediX.Models
         public int? Id { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Emails")]
+        public string Emails { get; set; }
         [Required]
         [Display(Name = "Subject")]
         public string Subject { get; set; }

@@ -1,71 +1,58 @@
 ﻿@model MediX.Models.SendEmailViewModel
 @using System.Web.Mvc.Html
 
-
 @{
-    ViewBag.Title = "SendEmailViewModel";
+    ViewBag.Title = "Send Email";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Send Email</h2>
+<div class="container">
+    <h2>Send Email</h2>
 
+    @using (Html.BeginForm("Create", "Email", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Create", "Email", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Emails, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Emails, new { @class = "form-control", rows = 2, @placeholder = "Enter email addresses (comma-separated)" })
+                @Html.ValidationMessageFor(model => model.Emails, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body, new { @class = "form-control", rows = 4 })
+                @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="postedFile" class="btn btn-default" accept="image/png,image/gif,image/jpeg,application/pdf" />
-            @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Attachment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="postedFile" class="form-control" accept="image/png,image/gif,image/jpeg,application/pdf" />
+                @Html.ValidationMessageFor(model => model.Attachment, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
         </div>
-    </div>
+    }
 </div>
-}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        //const fileInput = document.getElementById('attachment');
-        //fileInput.addEventListener('change', (event) => {
-
-        //})
-
-        //fileInput.addEventListener('change', (event) => {
-        //    const fileList = event.
-    </script>
 }
