@@ -21,14 +21,17 @@ namespace MediX.Controllers
         public ActionResult Index()
         {
             string currentUserId = User.Identity.GetUserId();
-            User.Identity.GetUserName();
             if (User.IsInRole("Standard"))
             {
-                int patientId = db.Patients.First(m => m.AccountId == currentUserId).Id;
                 return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff)
-                    .Where(m => m.PatientId == patientId).ToList());
+                    .Where(b => b.Patient.AccountId == currentUserId).ToList());
             }
-            return View(db.Bookings.ToList());
+            else if (User.IsInRole("MedicalStaff") || User.IsInRole("FacilityManager") || User.IsInRole("Administrator"))
+            {
+                return View(db.Bookings.ToList());
+            }
+
+            return View();
         }
 
         // GET: Bookings/Details/5

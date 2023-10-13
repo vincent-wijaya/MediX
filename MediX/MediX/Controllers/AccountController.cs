@@ -389,7 +389,8 @@ namespace MediX.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -397,6 +398,23 @@ namespace MediX.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        await UserManager.AddToRoleAsync(user.Id, "Standard");
+
+                        var patient = new Patient
+                        {
+                            AccountId = user.Id,
+                            FirstName = model.FirstName,
+                            LastName = model.LastName,
+                            DateOfBirth = model.DateOfBirth,
+                            Address = model.Address,
+                            PhoneNumber = model.PhoneNumber,
+                            Email = model.Email
+                        };
+
+                        db.Patients.Add(patient);
+                        db.SaveChanges();
+
                         return RedirectToLocal(returnUrl);
                     }
                 }
