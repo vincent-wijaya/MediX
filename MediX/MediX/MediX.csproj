@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Bookings1Controller.cs" />
     <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\PatientBookingsController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -867,6 +868,8 @@
     <Content Include="Scripts\tinymce\themes\silver\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <None Include="Views\Map\MedicalCentersMap.cshtml" />
+    <Content Include="Scripts\location.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -942,6 +945,7 @@
     <Content Include="Views\Bookings1\Index.cshtml" />
     <Content Include="Scripts\tinymce\langs\README.md" />
     <Content Include="Views\Bookings\Complete.cshtml" />
+    <Content Include="Views\MedicalCenters\Map.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -951,7 +955,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Map\" />
     <Folder Include="Views\TestPatients\" />
   </ItemGroup>
   <ItemGroup>

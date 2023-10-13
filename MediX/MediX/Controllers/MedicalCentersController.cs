@@ -39,6 +39,31 @@ namespace MediX.Controllers
             return View(medicalCenterViewModels);
         }
 
+        // GET: MedicalCenters/Map
+        public ActionResult Map()
+        {
+            var medicalCenters = db.MedicalCenters.ToList();
+
+            var medicalCenterViewModels = new List<MedicalCenterViewModel>();
+
+            foreach (var medicalCenter in medicalCenters)
+            {
+                var averageRating = CalculateAverageRating(medicalCenter.Id);
+                var count = CountRatings(medicalCenter.Id);
+
+                var viewModel = new MedicalCenterViewModel
+                {
+                    MedicalCenter = medicalCenter,
+                    AverageRating = averageRating,
+                    RatingsCount = count
+                };
+
+                medicalCenterViewModels.Add(viewModel);
+            }
+
+            return View(medicalCenterViewModels);
+        }
+
         // GET: MedicalCenters/Details/5
         public ActionResult Details(int? id)
         {

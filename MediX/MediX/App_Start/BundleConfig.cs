@@ -31,6 +31,10 @@ namespace MediX
                     "~/Scripts/DataTables/jquery.dataTables.min.js",
                     "~/Scripts/DataTables/dataTables.bootstrap4.min.js"
                 ));
+           
+            bundles.Add(new ScriptBundle("~/bundles/mapbox").Include(
+                    "~/Scripts/location.js"
+                ));
         }
     }
 }

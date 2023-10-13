@@ -15,11 +15,14 @@
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
     </div>
 </div>
-<table class="table">
+
+<div id='map' style="height: 300px"></div>
+
+<table class="table mt-md-3">
     <thead>
         <tr>
             <th>
-                #
+                @Html.DisplayNameFor(model => model.MedicalCenter.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MedicalCenter.Name)
@@ -31,6 +34,12 @@
                 @Html.DisplayNameFor(model => model.MedicalCenter.Address)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.MedicalCenter.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MedicalCenter.Latitude)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MedicalCenter.OpenTime)
             </th>
             <th></th>
@@ -38,34 +47,36 @@
     </thead>
 
     <tbody>
-        @{
-            var index = 0;
-        }
         @foreach (var item in Model)
         {
-            index++;
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => index)
+            <tr class="coordinates">
+                <td class="id">
+                    @Html.DisplayFor(modelItem => item.MedicalCenter.Id)
                 </td>
-                <td>
+                <td class="name">
                     @Html.DisplayFor(modelItem => item.MedicalCenter.Name)
                 </td>
-                <th>
+                <td class="rating">
                     @if (item.AverageRating != -1)
                     {
                         @Html.DisplayFor(modelItem => item.AverageRating)
-        }
+                    }
                     else
                     {
                         <span>-</span>
                     }
                     (@Html.DisplayFor(modelItem => item.RatingsCount))
-                </th>
-                <td>
+                </td>
+                <td class="address">
                     @Html.DisplayFor(modelItem => item.MedicalCenter.Address)
                 </td>
-                <td>
+                <td class="longitude">
+                    @Html.DisplayFor(modelItem => item.MedicalCenter.Longitude)
+                </td>
+                <td class="latitude">
+                    @Html.DisplayFor(modelItem => item.MedicalCenter.Latitude)
+                </td>
+                <td class="openTime">
                     @Html.DisplayFor(modelItem => item.MedicalCenter.OpenTime) - @Html.DisplayFor(modelItem => item.MedicalCenter.CloseTime)
                 </td>
                 <td>
@@ -86,6 +97,8 @@
 </table>
 
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mapbox")
     @Scripts.Render("~/bundles/datatable")
     <script>
         $(document).ready(function () {
