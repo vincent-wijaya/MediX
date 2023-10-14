@@ -39,6 +39,38 @@ namespace MediX.Controllers
             return View(medicalCenterViewModels);
         }
 
+        // GET: MedicalCenters/Chart/5
+        [Authorize(Roles = "MedicalStaff,FacilityManager,Administrator")]
+        public ActionResult BookingsChart(int? id)
+        {
+            // Get the current date
+            DateTime currentDate = DateTime.Now.Date;
+
+            // Calculate the date range: 4 days before and 4 days after the current date
+            DateTime startDate = currentDate.AddDays(-2);
+            DateTime endDate = currentDate.AddDays(5);
+
+            // Query to get all bookings within the specified date range and grouped based on date, returning the date and the number of bookings in that day
+            var bookings = db.Bookings.Where(b => b.MedicalCenterId == id).AsEnumerable().Where(b => b.DateTime >= startDate && b.DateTime <= endDate).GroupBy(b => b.DateTime.Date)
+                .Select(group => new { Date = group.Key, Count = group.Count() }).OrderBy(group => group.Date).ToList();
+
+            List<Dictionary<string, object>> dataPoints = new List<Dictionary<string, object>>();
+            foreach (var group in bookings)
+            {
+                var dataPoint = new Dictionary<string, object>
+                {
+                    ["x"] = group.Date.ToOADate(),
+                    ["y"] = group.Count
+                };
+                dataPoints.Add(dataPoint);
+            }
+
+
+            ViewBag.data = dataPoints;
+
+            return View();
+        }
+
         // GET: MedicalCenters/Map
         public ActionResult Map()
         {

@@ -29,12 +29,24 @@ namespace MediX
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include(
                     "~/Scripts/lib/jquery.min.js",
                     "~/Scripts/DataTables/jquery.dataTables.min.js",
-                    "~/Scripts/DataTables/dataTables.bootstrap4.min.js"
+                    "~/Scripts/DataTables/dataTables.bootstrap4.min.js",
+                    "~/Scripts/DataTables/dataTables.buttons.min.js",
+                    "~/Scripts/jszip.min.js",
+                    "~/Scripts/pdfmake/pdfmake.min.js",
+                    "~/Scripts/pdfmake/vfs_fonts.js",
+                    "~/Scripts/DataTables/buttons.bootstrap4.min.js",
+                    "~/Scripts/DataTables/buttons.flash.min.js",
+                    "~/Scripts/DataTables/buttons.html5.min.js",
+                    "~/Scripts/DataTables/buttons.print.min.js",
+                    "~/Scripts/DataTables/buttons.jqueryui.min.js"
+
                 ));
            
             bundles.Add(new ScriptBundle("~/bundles/mapbox").Include(
                     "~/Scripts/location.js"
                 ));
+
+
         }
     }
 }

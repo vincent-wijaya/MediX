@@ -6,6 +6,7 @@
 }
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/DataTables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.1/css/buttons.dataTables.min.css">
 
 <div class="row mb-md-3">
     <div class="col-md-6">
@@ -15,6 +16,7 @@
         @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success " })
     </div>
 </div>
+<div id="exportButtons"></div>
 <table class="table">
     <thead>
         <tr>
@@ -67,9 +69,17 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/datatable")
+    <script src="//cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('.table').DataTable();
+            var table = $('.table').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'pdf', 'csv', 'excel', 'copy'
+                ]
+            });
+
+            table.buttons().container().appendTo($('#exportButtons'));
         });
     </script>
 }

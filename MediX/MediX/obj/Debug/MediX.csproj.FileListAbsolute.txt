@@ -233,3 +233,15 @@ C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.M
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.Numerics.Vectors.xml
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.Text.Encoding.CodePages.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\ClosedXML.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\DocumentFormat.OpenXml.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\ExcelNumberFormat.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\Irony.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\SixLabors.Fonts.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.IO.Packaging.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\XLParser.dll
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\ClosedXML.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\DocumentFormat.OpenXml.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\ExcelNumberFormat.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\SixLabors.Fonts.xml
+C:\Users\Vincent Wijaya\Desktop\FIT5032\FIT5032_Project\MediX\MediX\bin\System.IO.Packaging.xml
