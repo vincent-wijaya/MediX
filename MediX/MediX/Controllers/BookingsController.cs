@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -134,6 +135,12 @@ namespace MediX.Controllers
             {
                 db.Bookings.Add(booking);
                 db.SaveChanges();
+
+                var patient = db.Patients.Where(p => p.Id == booking.PatientId).First();
+                var medicalCenter = db.MedicalCenters.Where(mc => mc.Id == booking.MedicalCenterId).First();
+
+                EmailController emailController = new EmailController();
+                emailController.SendBookingDetails(patient, booking, medicalCenter);
                 return RedirectToAction("Index");
             }
 
