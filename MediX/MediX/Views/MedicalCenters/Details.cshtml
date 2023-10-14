@@ -50,8 +50,9 @@
 </div>
 <p>
     @if (User.IsInRole("MedicalStaff") | User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
-    { 
+    {
         @Html.ActionLink("Edit", "Edit", new { id = Model.MedicalCenter.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Chart", "BookingsChart", new { id = Model.MedicalCenter.Id }, new { @class = "btn btn-success" })
     }
     <a class="btn btn-outline-secondary" href="javascript:history.back()">Back</a>
 </p>

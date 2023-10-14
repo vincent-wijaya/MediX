@@ -1,29 +1,42 @@
-﻿
-@{
-    ViewBag.Title = "BookingsChart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+﻿<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <h2>Bookings Chart</h2>
 
-<div id="chart" style="height: 400px; width: 60%;"></div>
+<div id="chartContainer" style="height: 500px; width: 100%;"></div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-<script>
-    window.onload = function () {
-        var chart = new CanvasJS.Chart("chart", {
-            title: {
-                text: "Daily Number of Bookings"
-            }
-            data: [
-                {
+
+    <script>
+        window.onload = function () {
+            var chartData = @Html.Raw(Json.Encode(ViewBag.Data));
+            console.log(chartData);
+
+            var dataPoints = chartData.map(item => {
+                return { label: item.x, y: item.y };
+            });
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Bookings Chart"
+                },
+                axisX: {
+                    valueFormatString: "DD/MM/YYYY",
+                    labelAngle: -45
+                },
+                axisY: {
+                    title: "# of Bookings",
+                    includeZero: true
+                },
+                data: [{
                     type: "column",
-                    dataPoints: @Html.Raw(ViewBag.Data)
-                }
-            ]
-        })
-    }
+                    dataPoints: dataPoints
+                }]
+            });
+
+            chart.render();
+        }
     </script>
 }

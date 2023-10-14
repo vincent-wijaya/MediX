@@ -43,6 +43,11 @@ namespace MediX.Controllers
         [Authorize(Roles = "MedicalStaff,FacilityManager,Administrator")]
         public ActionResult BookingsChart(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             // Get the current date
             DateTime currentDate = DateTime.Now.Date;
 
@@ -59,7 +64,7 @@ namespace MediX.Controllers
             {
                 var dataPoint = new Dictionary<string, object>
                 {
-                    ["x"] = group.Date.ToOADate(),
+                    ["x"] = group.Date.ToString().Split()[0],
                     ["y"] = group.Count
                 };
                 dataPoints.Add(dataPoint);

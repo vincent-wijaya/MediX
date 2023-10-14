@@ -85,6 +85,7 @@
                     @if (User.IsInRole("FacilityManager") | User.IsInRole("Administrator"))
                     {
                         @Html.ActionLink("Edit", "Edit", new { id = item.MedicalCenter.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Chart", "BookingsChart", new { id = item.MedicalCenter.Id }, new { @class = "btn btn-secondary" })
                     }
                     @Html.ActionLink("Details", "Details", new { id = item.MedicalCenter.Id }, new { @class = "btn btn-info", style = "color: white;" })
                     @if (User.IsInRole("Administrator"))
