@@ -1,1 +1,1 @@
-# FIT5032_Project
+# MediX (FIT5032 Project)
