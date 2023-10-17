@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
+using System.Web.Mvc;
 using System.Web.UI.WebControls;
 
 namespace MediX.Models
@@ -20,6 +21,7 @@ namespace MediX.Models
         public string Subject { get; set; }
 
         [Required]
+        [AllowHtml]
         [Display(Name = "Body")]
         public string Body { get; set; }
 

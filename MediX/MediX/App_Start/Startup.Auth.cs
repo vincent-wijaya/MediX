@@ -46,17 +46,17 @@ namespace MediX
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            app.UseMicrosoftAccountAuthentication(
+                clientId: "057840a2-79ff-4d37-aac0-d1940ff7cabf",
+                clientSecret: "0637c5ef-5775-42d6-8b76-bde7ee257d13");
 
             //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            //   consumerKey: "LTBFRzhBRzJGNnZOeTNIdXF0Y0M6MTpjaQ",
+            //   consumerSecret: "pKqZKRJtBCunNt3ccA9Z8cdNGosqnRBO5uMxhdlroB121qUtxj");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1375937619694223",
+               appSecret: "9b9652c7d3eb8a452b9efe3f9acea473");
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {

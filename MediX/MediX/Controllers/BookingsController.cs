@@ -20,17 +20,32 @@ namespace MediX.Controllers
 
         // GET: Bookings
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int? medicalCenterId, string date)
         {
             string currentUserId = User.Identity.GetUserId();
-            if (User.IsInRole("Standard"))
+            if (medicalCenterId == null && date == null)
             {
-                return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff)
-                    .Where(b => b.Patient.AccountId == currentUserId).ToList());
+                if (User.IsInRole("Standard"))
+                {
+                    return View(db.Bookings.Include(b => b.Patient).Include(b => b.Staff)
+                        .Where(b => b.Patient.AccountId == currentUserId).ToList());
+                }
+                else if (User.IsInRole("MedicalStaff") || User.IsInRole("FacilityManager") || User.IsInRole("Administrator"))
+                {
+                    return View(db.Bookings.ToList());
+                }
             }
-            else if (User.IsInRole("MedicalStaff") || User.IsInRole("FacilityManager") || User.IsInRole("Administrator"))
+            else
             {
-                return View(db.Bookings.ToList());
+                if (User.IsInRole("Standard"))
+                {
+                    return View(db.Bookings.Include(b => b.Patient)
+                        .Where(b => b.Patient.AccountId == currentUserId && b.DateTime.Equals(DateTime.Parse(date)) && b.MedicalCenterId == medicalCenterId).ToList());
+                }
+                else if (User.IsInRole("MedicalStaff") || User.IsInRole("FacilityManager") || User.IsInRole("Administrator"))
+                {
+                    return View(db.Bookings.ToList().Where(b => b.DateTime.Date.Equals(DateTime.Parse(date)) && b.MedicalCenterId == medicalCenterId));
+                }
             }
 
             return View();

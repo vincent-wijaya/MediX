@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.IO;
 using Microsoft.Ajax.Utilities;
+using Ganss.Xss;
 
 namespace MediX.Controllers
 {
@@ -45,11 +46,17 @@ namespace MediX.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Emails,Subject,Body")] SendEmailViewModel model, HttpPostedFileBase postedFile)
         {
+            // POST: Ratings/Create
+            // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+            // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
             if (ModelState.IsValid)
             {
                 List<string> toEmails = model.Emails.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 var subject = model.Subject;
-                var body = model.Body;
+
+                var sanitizer = new HtmlSanitizer();
+                var body = sanitizer.Sanitize(model.Body);
 
                 List<string> toNames = new List<string>();
                 List<string> emailsToRemove = new List<string>();

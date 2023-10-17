@@ -70,8 +70,8 @@ namespace MediX.Controllers
                 dataPoints.Add(dataPoint);
             }
 
-
-            ViewBag.data = dataPoints;
+            ViewBag.MedicalCenter = db.MedicalCenters.Where(mc => mc.Id == id).First(); 
+            ViewBag.Data = dataPoints;
 
             return View();
         }

@@ -59,9 +59,9 @@ namespace MediX.Controllers
                 return HttpNotFound();
             }
 
-            if (!IsBookingBelongsToUser(booking))
+            if (!IsBookingBelongsToUser(booking) || booking.Ratings.Count > 0)
             {
-                return new HttpUnauthorizedResult();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             Rating rating = new Rating
@@ -88,7 +88,7 @@ namespace MediX.Controllers
 
                 db.Ratings.Add(rating);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Bookings");
             }
             return View(rating);
         }
