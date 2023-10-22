@@ -51,7 +51,7 @@ namespace MediX.Controllers
             // Get the current date
             DateTime currentDate = DateTime.Now.Date;
 
-            // Calculate the date range: 4 days before and 4 days after the current date
+            // Calculate the date range: 2 days before and 5 days after the current date
             DateTime startDate = currentDate.AddDays(-2);
             DateTime endDate = currentDate.AddDays(5);
 
@@ -59,6 +59,7 @@ namespace MediX.Controllers
             var bookings = db.Bookings.Where(b => b.MedicalCenterId == id).AsEnumerable().Where(b => b.DateTime >= startDate && b.DateTime <= endDate).GroupBy(b => b.DateTime.Date)
                 .Select(group => new { Date = group.Key, Count = group.Count() }).OrderBy(group => group.Date).ToList();
 
+            // Generate chart data for medical center
             List<Dictionary<string, object>> dataPoints = new List<Dictionary<string, object>>();
             foreach (var group in bookings)
             {
@@ -85,9 +86,13 @@ namespace MediX.Controllers
 
             foreach (var medicalCenter in medicalCenters)
             {
+                // Get average of ratings for medical center
                 var averageRating = CalculateAverageRating(medicalCenter.Id);
+
+                // Keep track of number of reviews for medical center
                 var count = CountRatings(medicalCenter.Id);
 
+                // Create view model for medical center
                 var viewModel = new MedicalCenterViewModel
                 {
                     MedicalCenter = medicalCenter,
@@ -115,9 +120,13 @@ namespace MediX.Controllers
             }
 
 
+            // Get average of ratings for medical center
             var averageRating = CalculateAverageRating(medicalCenter.Id);
+
+            // Keep track of number of reviews for medical center
             var count = CountRatings(medicalCenter.Id);
 
+            // Create view model for medical center
             var viewModel = new MedicalCenterViewModel
             {
                 MedicalCenter = medicalCenter,

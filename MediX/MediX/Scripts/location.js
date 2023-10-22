@@ -97,6 +97,7 @@ map.on('load', function () {
     map.on('click', 'places', function (e) {
         var feature = e.features[0];
         var coordinates = feature.geometry.coordinates.slice();
+        console.log(feature.properties.id)
         var description =
             `<h3>${feature.properties.name}</h3>
             <h6>${feature.properties.address}</p>
