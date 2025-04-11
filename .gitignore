@@ -5,5 +5,9 @@
 # NuGet Packages
 packages/
 
+# Build results - bin and obj folders
+**/bin/
+**/obj/
+
 # SQL query files
 SQLQuery1.sql
