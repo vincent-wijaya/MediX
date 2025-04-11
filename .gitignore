@@ -1,0 +1,9 @@
+# Visual Studio cache/options directory
+.vs/
+.vs/MediX/
+
+# NuGet Packages
+packages/
+
+# SQL query files
+SQLQuery1.sql
